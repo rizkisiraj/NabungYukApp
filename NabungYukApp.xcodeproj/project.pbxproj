@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E90D3852B906210004F0337 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E90D3842B906210004F0337 /* FormView.swift */; };
+		7E90D3872B9065F5004F0337 /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E90D3862B9065F5004F0337 /* NumbersOnlyViewModifier.swift */; };
 		7EA0532F2B8E129800E08319 /* NabungYukAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA0532E2B8E129800E08319 /* NabungYukAppApp.swift */; };
 		7EA053312B8E129800E08319 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA053302B8E129800E08319 /* ContentView.swift */; };
 		7EA053332B8E129A00E08319 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA053322B8E129A00E08319 /* Assets.xcassets */; };
@@ -14,6 +16,13 @@
 		7EA053402B8E129A00E08319 /* NabungYukAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA0533F2B8E129A00E08319 /* NabungYukAppTests.swift */; };
 		7EA0534A2B8E129A00E08319 /* NabungYukAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA053492B8E129A00E08319 /* NabungYukAppUITests.swift */; };
 		7EA0534C2B8E129A00E08319 /* NabungYukAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA0534B2B8E129A00E08319 /* NabungYukAppUITestsLaunchTests.swift */; };
+		7EA0535B2B8E12E200E08319 /* OnboardingSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA0535A2B8E12E100E08319 /* OnboardingSingleView.swift */; };
+		7EAD219D2B8E1FD000368DEA /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219C2B8E1FD000368DEA /* Onboarding.swift */; };
+		7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219E2B8E258300368DEA /* OnboardingView.swift */; };
+		7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */; };
+		7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0B2B8EF90800609E44 /* SavingView.swift */; };
+		7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */; };
+		7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E90D3842B906210004F0337 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		7E90D3862B9065F5004F0337 /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
 		7EA0532B2B8E129800E08319 /* NabungYukApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NabungYukApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA0532E2B8E129800E08319 /* NabungYukAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NabungYukAppApp.swift; sourceTree = "<group>"; };
 		7EA053302B8E129800E08319 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +55,13 @@
 		7EA053452B8E129A00E08319 /* NabungYukAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NabungYukAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA053492B8E129A00E08319 /* NabungYukAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NabungYukAppUITests.swift; sourceTree = "<group>"; };
 		7EA0534B2B8E129A00E08319 /* NabungYukAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NabungYukAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7EA0535A2B8E12E100E08319 /* OnboardingSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSingleView.swift; sourceTree = "<group>"; };
+		7EAD219C2B8E1FD000368DEA /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		7EAD219E2B8E258300368DEA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDotIndicator.swift; sourceTree = "<group>"; };
+		7EF21C0B2B8EF90800609E44 /* SavingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingView.swift; sourceTree = "<group>"; };
+		7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGoal.swift; sourceTree = "<group>"; };
+		7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +89,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E90D3832B906201004F0337 /* FormViews */ = {
+			isa = PBXGroup;
+			children = (
+				7E90D3842B906210004F0337 /* FormView.swift */,
+				7E90D3862B9065F5004F0337 /* NumbersOnlyViewModifier.swift */,
+			);
+			path = FormViews;
+			sourceTree = "<group>";
+		};
 		7EA053222B8E129800E08319 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +121,8 @@
 		7EA0532D2B8E129800E08319 /* NabungYukApp */ = {
 			isa = PBXGroup;
 			children = (
+				7EA053592B8E12BA00E08319 /* View */,
+				7EA053582B8E12B400E08319 /* Model */,
 				7EA0532E2B8E129800E08319 /* NabungYukAppApp.swift */,
 				7EA053302B8E129800E08319 /* ContentView.swift */,
 				7EA053322B8E129A00E08319 /* Assets.xcassets */,
@@ -125,6 +154,44 @@
 				7EA0534B2B8E129A00E08319 /* NabungYukAppUITestsLaunchTests.swift */,
 			);
 			path = NabungYukAppUITests;
+			sourceTree = "<group>";
+		};
+		7EA053582B8E12B400E08319 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EAD219C2B8E1FD000368DEA /* Onboarding.swift */,
+				7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7EA053592B8E12BA00E08319 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E90D3832B906201004F0337 /* FormViews */,
+				7EAD21A32B8E2F2B00368DEA /* SavingViews */,
+				7EAD21A02B8E298D00368DEA /* OnboardingViews */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7EAD21A02B8E298D00368DEA /* OnboardingViews */ = {
+			isa = PBXGroup;
+			children = (
+				7EA0535A2B8E12E100E08319 /* OnboardingSingleView.swift */,
+				7EAD219E2B8E258300368DEA /* OnboardingView.swift */,
+				7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */,
+			);
+			path = OnboardingViews;
+			sourceTree = "<group>";
+		};
+		7EAD21A32B8E2F2B00368DEA /* SavingViews */ = {
+			isa = PBXGroup;
+			children = (
+				7EF21C0B2B8EF90800609E44 /* SavingView.swift */,
+				7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */,
+			);
+			path = SavingViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +324,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */,
+				7EA0535B2B8E12E200E08319 /* OnboardingSingleView.swift in Sources */,
+				7E90D3852B906210004F0337 /* FormView.swift in Sources */,
 				7EA053312B8E129800E08319 /* ContentView.swift in Sources */,
+				7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */,
+				7EAD219D2B8E1FD000368DEA /* Onboarding.swift in Sources */,
+				7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */,
+				7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */,
+				7E90D3872B9065F5004F0337 /* NumbersOnlyViewModifier.swift in Sources */,
 				7EA0532F2B8E129800E08319 /* NabungYukAppApp.swift in Sources */,
+				7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
