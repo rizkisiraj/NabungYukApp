@@ -10,7 +10,7 @@ import SwiftUI
 struct SavingView: View {
     private let savings = SavingGoal.savingGoals
     @State private var preferredListTabungan = Tabungan.berlangsung
-    
+    @State private var isSheetShowing = false
     enum Tabungan {
         case berlangsung, tercapai
     }
@@ -40,7 +40,7 @@ struct SavingView: View {
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         Button {
-                            
+                            isSheetShowing = true
                         } label: {
                             
                             HStack {
@@ -50,6 +50,32 @@ struct SavingView: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                }
+                .sheet(isPresented: $isSheetShowing) {
+                    NavigationStack {
+                        FormView()
+                            .navigationTitle("Tambah Tabungan")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button {
+                                        
+                                    } label: {
+                                        Text("Selesai")
+                                    }
+                                }
+                                
+                                ToolbarItem(placement: .cancellationAction) {
+                                    Button {
+                                        
+                                    } label: {
+                                        Text("Batal")
+                                    }.tint(.red)
+                                }
+                            }
+                    }
+                    .presentationDetents([.medium, .large])
+                    
                 }
             }
         }
