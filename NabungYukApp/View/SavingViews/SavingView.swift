@@ -55,26 +55,32 @@ struct SavingView: View {
                     NavigationStack {
                         FormView()
                             .navigationTitle("Tambah Tabungan")
-                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarTitleDisplayMode(.large)
                             .toolbar {
-                                ToolbarItem(placement: .confirmationAction) {
+                                ToolbarItem(placement: .topBarTrailing) {
                                     Button {
-                                        
+                                        isSheetShowing = false
                                     } label: {
-                                        Text("Selesai")
+                                        Image(systemName: "xmark")
                                     }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                                    .clipShape(Circle())
                                 }
                                 
-                                ToolbarItem(placement: .cancellationAction) {
+                                ToolbarItem(placement: .bottomBar) {
                                     Button {
                                         
                                     } label: {
-                                        Text("Batal")
-                                    }.tint(.red)
+                                        Text("Tambah")
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.large)
+                                    .clipShape(Capsule())
                                 }
                             }
                     }
-                    .presentationDetents([.medium, .large])
                     
                 }
             }

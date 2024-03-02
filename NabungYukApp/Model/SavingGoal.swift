@@ -14,6 +14,7 @@ struct SavingGoal: Identifiable {
     var period: PeriodSelection
     var targetSavePerPeriod: Int
     var dummyImage: String
+    var category: Category
 }
 
 enum PeriodSelection: String, CaseIterable {
@@ -22,10 +23,17 @@ enum PeriodSelection: String, CaseIterable {
     case monthly = "Bulanan"
 }
 
+enum Category: String, CaseIterable {
+    case travel = "airplane"
+    case entertainment = "film.fill"
+    case education = "book.fill"
+    case health = "heart.fill"
+}
+
 extension SavingGoal {
     static let savingGoals = [
-        SavingGoal(title: "Liburan ke Anambas", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1"),
-        SavingGoal(title: "Liburan ke Thailand", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1"),
-        SavingGoal(title: "Liburan ke Jepang", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1")
+        SavingGoal(title: "Liburan ke Anambas", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1", category: Category.education),
+        SavingGoal(title: "Liburan ke Thailand", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1", category: Category.entertainment),
+        SavingGoal(title: "Liburan ke Jepang", target: 5000000, period: .monthly, targetSavePerPeriod: 100000, dummyImage: "dummyImage1", category: Category.health)
     ]
 }

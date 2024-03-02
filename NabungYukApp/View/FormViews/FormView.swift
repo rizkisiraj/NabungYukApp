@@ -9,19 +9,20 @@ import SwiftUI
 
 struct FormView: View {
     enum FocusedField {
-        case target
+        case targetSaving
+        case savingPerPeriod
     }
-
     
     @State private var savingName = ""
     @State private var targetSaving = ""
     @State private var savingPerPeriod = ""
     @State private var period: PeriodSelection = PeriodSelection.daily
+    @State private var selectedCategory = Category.travel
     
     @FocusState private var focusedField: FocusedField?
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(alignment: .leading,spacing: 16) {
             HStack {
                 Image(systemName: "text.alignleft")
                 Spacer(minLength: 20)
@@ -38,7 +39,7 @@ struct FormView: View {
                 Image(systemName: "number")
                 Spacer(minLength: 20)
                 TextField("Target Tabungan", text: $targetSaving)
-                        .focused($focusedField, equals: .target)
+                        .focused($focusedField, equals: .targetSaving)
                     .numbersOnly($targetSaving)
                     .padding()
                     .background(.gray.opacity(0.1))
@@ -49,10 +50,21 @@ struct FormView: View {
                 }
             }
             
+            Text("Kategori")
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack() {
+                    ForEach(Category.allCases, id: \.self) { category in
+                            CategoryCard(category: category, selected: $selectedCategory)
+                    }
+                }
+            }
+            
             Divider()
             
             VStack(alignment: .leading) {
                 Text("Rencana Pengisian")
+                    .font(.headline)
+                    .fontWeight(.bold)
                 Picker("Periode Pengisian", selection: $period) {
                         ForEach(PeriodSelection.allCases, id: \.self) {period in
                             Text("\(period.rawValue)").tag(period)
@@ -61,9 +73,9 @@ struct FormView: View {
                 .pickerStyle(.segmented)
             }
             HStack {
-                TextField("Nominal Pengisian", text: $targetSaving)
-                    .focused($focusedField, equals: .target)
-                    .numbersOnly($targetSaving)
+                TextField("Nominal Pengisian", text: $savingPerPeriod)
+                    .focused($focusedField, equals: .savingPerPeriod)
+                    .numbersOnly($savingPerPeriod)
                     .padding()
                     .background(.gray.opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -89,4 +101,39 @@ struct FormView: View {
 
 #Preview {
     FormView()
+}
+
+struct CategoryCard: View {
+    var category: Category
+    @Binding var selected: Category
+    
+    
+    var body: some View {
+        Group {
+            if category == selected {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14)
+                        .foregroundStyle(.green.secondary)
+                        .frame(width: 60, height: 60)
+                    Image(systemName: category.rawValue)
+                        .font(.title2)
+                        .foregroundStyle(.green)
+                }
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14)
+                        .foregroundStyle(.gray.secondary)
+                        .frame(width: 60, height: 60)
+                    Image(systemName: category.rawValue)
+                        .font(.title2)
+                        .foregroundStyle(.gray)
+                }
+            }
+        }
+        .onTapGesture {
+            withAnimation {
+                selected = category
+            }
+        }
+    }
 }
