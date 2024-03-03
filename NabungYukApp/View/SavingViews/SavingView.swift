@@ -27,7 +27,12 @@ struct SavingView: View {
                     .padding()
                         VStack(spacing: 14) {
                             ForEach(savings) { saving in
-                                SavingCard(content: saving)
+                                NavigationLink {
+                                    SavingDetailViews(content: saving)
+                                } label: {
+                                    SavingCard(content: saving)
+                                }
+                                
                             }
                             
                             Spacer()
@@ -42,7 +47,6 @@ struct SavingView: View {
                         Button {
                             isSheetShowing = true
                         } label: {
-                            
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add")

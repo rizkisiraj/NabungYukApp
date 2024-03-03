@@ -21,6 +21,8 @@
 		7EAD219D2B8E1FD000368DEA /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219C2B8E1FD000368DEA /* Onboarding.swift */; };
 		7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219E2B8E258300368DEA /* OnboardingView.swift */; };
 		7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */; };
+		7ECBB95C2B94B65400ACE007 /* SavingDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */; };
+		7ECBB95E2B94BDA700ACE007 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */; };
 		7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF59F22B9444A9002470C8 /* ModalDialog.swift */; };
 		7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0B2B8EF90800609E44 /* SavingView.swift */; };
 		7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */; };
@@ -62,6 +64,8 @@
 		7EAD219C2B8E1FD000368DEA /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		7EAD219E2B8E258300368DEA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDotIndicator.swift; sourceTree = "<group>"; };
+		7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDetailViews.swift; sourceTree = "<group>"; };
+		7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		7EDF59F22B9444A9002470C8 /* ModalDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDialog.swift; sourceTree = "<group>"; };
 		7EF21C0B2B8EF90800609E44 /* SavingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingView.swift; sourceTree = "<group>"; };
 		7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGoal.swift; sourceTree = "<group>"; };
@@ -93,12 +97,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7E37D3972B93788A0005236C /* LaunhScreen */ = {
+		7E37D3972B93788A0005236C /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
 				7E37D3982B93789F0005236C /* LaunchScreen.storyboard */,
 			);
-			path = LaunhScreen;
+			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
 		7E90D3832B906201004F0337 /* FormViews */ = {
@@ -181,7 +185,8 @@
 		7EA053592B8E12BA00E08319 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7E37D3972B93788A0005236C /* LaunhScreen */,
+				7ECBB95A2B94B28800ACE007 /* SavingDetailViews */,
+				7E37D3972B93788A0005236C /* LaunchScreen */,
 				7E90D3832B906201004F0337 /* FormViews */,
 				7EAD21A32B8E2F2B00368DEA /* SavingViews */,
 				7EAD21A02B8E298D00368DEA /* OnboardingViews */,
@@ -206,6 +211,15 @@
 				7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */,
 			);
 			path = SavingViews;
+			sourceTree = "<group>";
+		};
+		7ECBB95A2B94B28800ACE007 /* SavingDetailViews */ = {
+			isa = PBXGroup;
+			children = (
+				7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */,
+				7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */,
+			);
+			path = SavingDetailViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +363,8 @@
 				7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */,
 				7E90D3872B9065F5004F0337 /* NumbersOnlyViewModifier.swift in Sources */,
 				7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */,
+				7ECBB95E2B94BDA700ACE007 /* CircularProgressView.swift in Sources */,
+				7ECBB95C2B94B65400ACE007 /* SavingDetailViews.swift in Sources */,
 				7EA0532F2B8E129800E08319 /* NabungYukAppApp.swift in Sources */,
 				7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */,
 			);

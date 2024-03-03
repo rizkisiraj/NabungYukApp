@@ -58,6 +58,7 @@ struct SavingCard: View {
                 .padding([.horizontal, .bottom])
                 .tint(.green)
         }
+        .tint(.black)
         .background(.cardBg)
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
