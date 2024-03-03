@@ -18,84 +18,92 @@ struct FormView: View {
     @State private var savingPerPeriod = ""
     @State private var period: PeriodSelection = PeriodSelection.daily
     @State private var selectedCategory = Category.travel
+    @State private var isModalShowing = false
     
     @FocusState private var focusedField: FocusedField?
     
     var body: some View {
-        VStack(alignment: .leading,spacing: 16) {
-            HStack {
-                Image(systemName: "text.alignleft")
-                Spacer(minLength: 20)
-                TextField("Nama Tabungan", text: $savingName)
-                    .padding()
-                    .background(.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.black.opacity(0.3), lineWidth: 2)
-                }
-            }
-            HStack {
-                Image(systemName: "number")
-                Spacer(minLength: 20)
-                TextField("Target Tabungan", text: $targetSaving)
-                        .focused($focusedField, equals: .targetSaving)
-                    .numbersOnly($targetSaving)
-                    .padding()
-                    .background(.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.black.opacity(0.3), lineWidth: 2)
-                }
-            }
-            
-            Text("Kategori")
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack() {
-                    ForEach(Category.allCases, id: \.self) { category in
-                            CategoryCard(category: category, selected: $selectedCategory)
+            VStack(alignment: .leading,spacing: 16) {
+                HStack {
+                    Image(systemName: "text.alignleft")
+                    Spacer(minLength: 20)
+                    TextField("Nama Tabungan", text: $savingName)
+                        .padding()
+                        .background(.gray.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.black.opacity(0.3), lineWidth: 2)
                     }
                 }
-            }
-            
-            Divider()
-            
-            VStack(alignment: .leading) {
-                Text("Rencana Pengisian")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                Picker("Periode Pengisian", selection: $period) {
-                        ForEach(PeriodSelection.allCases, id: \.self) {period in
-                            Text("\(period.rawValue)").tag(period)
+                HStack {
+                    Image(systemName: "number")
+                    Spacer(minLength: 20)
+                    TextField("Target Tabungan", text: $targetSaving)
+                            .focused($focusedField, equals: .targetSaving)
+                        .numbersOnly($targetSaving)
+                        .padding()
+                        .background(.gray.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.black.opacity(0.3), lineWidth: 2)
+                    }
+                }
+                
+                Text("Kategori")
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack() {
+                        ForEach(Category.allCases, id: \.self) { category in
+                                CategoryCard(category: category, selected: $selectedCategory)
                         }
                     }
-                .pickerStyle(.segmented)
-            }
-            HStack {
-                TextField("Nominal Pengisian", text: $savingPerPeriod)
-                    .focused($focusedField, equals: .savingPerPeriod)
-                    .numbersOnly($savingPerPeriod)
-                    .padding()
-                    .background(.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.black.opacity(0.3), lineWidth: 2)
-                    }
-                Button {
-                    
-                } label: {
-                    Image(systemName: "calendar.badge.checkmark")
-                        .font(.title3)
                 }
-                .buttonStyle(.borderedProminent)
-                .clipShape(Circle())
-                .tint(.green)
+                
+                Divider()
+                
+                VStack(alignment: .leading) {
+                    Text("Rencana Pengisian")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    Picker("Periode Pengisian", selection: $period) {
+                            ForEach(PeriodSelection.allCases, id: \.self) {period in
+                                Text("\(period.rawValue)").tag(period)
+                            }
+                        }
+                    .pickerStyle(.segmented)
+                }
+                HStack {
+                    TextField("Nominal Pengisian", text: $savingPerPeriod)
+                        .focused($focusedField, equals: .savingPerPeriod)
+                        .numbersOnly($savingPerPeriod)
+                        .padding()
+                        .background(.gray.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.black.opacity(0.3), lineWidth: 2)
+                        }
+                    Button {
+                        isModalShowing = true
+                    } label: {
+                        Image(systemName: "calendar.badge.checkmark")
+                            .font(.title3)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .clipShape(Circle())
+                    .tint(.green)
+                }
+                Spacer()
             }
-            Spacer()
-        }
-        .padding()
+            .padding()
+            .alert(Text("Estimasi Pengisian"), isPresented: $isModalShowing) {
+                Button("Tutup", role: .cancel) {
+                    
+                }
+            } message: {
+                Text("23 Maret 2023 (54 Hari)")
+            }
     }
 }
 

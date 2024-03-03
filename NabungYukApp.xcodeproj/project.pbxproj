@@ -21,6 +21,7 @@
 		7EAD219D2B8E1FD000368DEA /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219C2B8E1FD000368DEA /* Onboarding.swift */; };
 		7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219E2B8E258300368DEA /* OnboardingView.swift */; };
 		7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */; };
+		7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF59F22B9444A9002470C8 /* ModalDialog.swift */; };
 		7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0B2B8EF90800609E44 /* SavingView.swift */; };
 		7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */; };
 		7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */; };
@@ -61,6 +62,7 @@
 		7EAD219C2B8E1FD000368DEA /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		7EAD219E2B8E258300368DEA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDotIndicator.swift; sourceTree = "<group>"; };
+		7EDF59F22B9444A9002470C8 /* ModalDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDialog.swift; sourceTree = "<group>"; };
 		7EF21C0B2B8EF90800609E44 /* SavingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingView.swift; sourceTree = "<group>"; };
 		7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGoal.swift; sourceTree = "<group>"; };
 		7EF21C0F2B8F02CE00609E44 /* SavingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingCard.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				7E90D3842B906210004F0337 /* FormView.swift */,
 				7E90D3862B9065F5004F0337 /* NumbersOnlyViewModifier.swift */,
+				7EDF59F22B9444A9002470C8 /* ModalDialog.swift */,
 			);
 			path = FormViews;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */,
 				7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */,
 				7E90D3872B9065F5004F0337 /* NumbersOnlyViewModifier.swift in Sources */,
+				7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */,
 				7EA0532F2B8E129800E08319 /* NabungYukAppApp.swift in Sources */,
 				7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */,
 			);
