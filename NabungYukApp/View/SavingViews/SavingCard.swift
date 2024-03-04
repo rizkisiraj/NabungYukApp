@@ -17,7 +17,7 @@ struct SavingCard: View {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundStyle(.green.secondary)
                         .frame(width: 60, height: 60)
-                    Image(systemName: "airplane")
+                    Image(systemName: content.category.rawValue)
                         .font(.title2)
                         .foregroundStyle(.green)
                 }
@@ -26,6 +26,7 @@ struct SavingCard: View {
                     Text(content.title)
                         .font(.system(.title3, design: .rounded))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .foregroundStyle(.primary)
                     Text("9 bulan lagi")
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
@@ -40,6 +41,7 @@ struct SavingCard: View {
                     Text("Rp50.000")
                         .font(.system(size: 14))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .foregroundStyle(.primary)
                 }
                 Spacer()
                 VStack(alignment: .leading) {
@@ -58,7 +60,7 @@ struct SavingCard: View {
                 .padding([.horizontal, .bottom])
                 .tint(.green)
         }
-        .tint(.black)
+        .tint(.primary)
         .background(.cardBg)
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
@@ -66,4 +68,5 @@ struct SavingCard: View {
 
 #Preview {
     SavingCard(content: SavingGoal.savingGoals[0])
+        .preferredColorScheme(.dark)
 }

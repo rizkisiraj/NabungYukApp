@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SavingView: View {
-    private let savings = SavingGoal.savingGoals
+    @StateObject private var savingVM = SavingVM()
     @State private var preferredListTabungan = Tabungan.berlangsung
     @State private var isSheetShowing = false
     enum Tabungan {
@@ -26,7 +26,7 @@ struct SavingView: View {
                     .pickerStyle(.segmented)
                     .padding()
                         VStack(spacing: 14) {
-                            ForEach(savings) { saving in
+                            ForEach(savingVM.savings) { saving in
                                 NavigationLink {
                                     SavingDetailViews(content: saving)
                                 } label: {
@@ -57,33 +57,7 @@ struct SavingView: View {
                 }
                 .sheet(isPresented: $isSheetShowing) {
                     NavigationStack {
-                        FormView()
-                            .navigationTitle("Tambah Tabungan")
-                            .navigationBarTitleDisplayMode(.large)
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button {
-                                        isSheetShowing = false
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.red)
-                                    .clipShape(Circle())
-                                }
-                                
-                                ToolbarItem(placement: .bottomBar) {
-                                    Button {
-                                        
-                                    } label: {
-                                        Text("Tambah")
-                                            .frame(maxWidth: .infinity)
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .controlSize(.large)
-                                    .clipShape(Capsule())
-                                }
-                            }
+                        FormView(savingVM: savingVM, isSheetShowing: $isSheetShowing)
                     }
                     
                 }

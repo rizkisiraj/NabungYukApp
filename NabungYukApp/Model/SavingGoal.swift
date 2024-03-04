@@ -15,6 +15,7 @@ struct SavingGoal: Identifiable {
     var targetSavePerPeriod: Int
     var dummyImage: String
     var category: Category
+    var createdAt = Date()
 }
 
 enum PeriodSelection: String, CaseIterable {

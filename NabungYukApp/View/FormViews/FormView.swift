@@ -13,6 +13,8 @@ struct FormView: View {
         case savingPerPeriod
     }
     
+    @StateObject var savingVM: SavingVM
+    @Binding var isSheetShowing: Bool
     @State private var savingName = ""
     @State private var targetSaving = ""
     @State private var savingPerPeriod = ""
@@ -28,13 +30,14 @@ struct FormView: View {
                     Image(systemName: "text.alignleft")
                     Spacer(minLength: 20)
                     TextField("Nama Tabungan", text: $savingName)
+                        .autocorrectionDisabled()
                         .padding()
                         .background(.gray.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .overlay {
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(.black.opacity(0.3), lineWidth: 2)
-                    }
+                        }
                 }
                 HStack {
                     Image(systemName: "number")
@@ -104,11 +107,46 @@ struct FormView: View {
             } message: {
                 Text("23 Maret 2023 (54 Hari)")
             }
+            .navigationTitle("Tambah Tabungan")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isSheetShowing = false
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                    .clipShape(Circle())
+                }
+                
+                ToolbarItem(placement: .bottomBar) {
+                    Button {
+                        let targetSavingInt = Int(targetSaving) ?? 0
+                        let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
+                        
+                        if targetSavingInt != 0 && savingPerPeriodInt != 0 {
+                            let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
+                            savingVM.addSavingGoal(savingGoal: newSavingGoal)
+                            isSheetShowing = false
+                        } else {
+                            print("Ada yang salah teman")
+                        }
+                    } label: {
+                        Text("Tambah")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .clipShape(Capsule())
+                }
+            }
     }
 }
 
 #Preview {
-    FormView()
+    FormView(savingVM: SavingVM(), isSheetShowing: .constant(false))
 }
 
 struct CategoryCard: View {
