@@ -27,7 +27,7 @@ struct SavingCard: View {
                         .font(.system(.title3, design: .rounded))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.primary)
-                    Text("9 bulan lagi")
+                    Text(timeToReachTarget(target: content.target, savingsPerPeriod: content.targetSavePerPeriod, period: content.period))
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                 }

@@ -34,8 +34,8 @@ struct SavingDetailViews: View {
                         }
                         Spacer()
                         ZStack {
-                            CircularProgressView(progress: 0.4)
-                            Text("\(0.4 * 100, specifier: "%.0f")%")
+                            CircularProgressView(progress: generatePercentage(target:content.target, process: content.gatheredAmount))
+                            Text("\(generatePercentage(target:content.target, process: content.gatheredAmount) * 100, specifier: "%.0f")%")
                                 .font(.system(size: 14))
                                 .bold()
                         }.frame(width: 50, height: 50)
@@ -53,7 +53,7 @@ struct SavingDetailViews: View {
                             Text("Estimasi Tercapai")
                                 .font(.headline)
                             Spacer()
-                            Text("6 bulan lagi")
+                            Text(timeToReachTarget(target: content.target, savingsPerPeriod:content.targetSavePerPeriod, period:content.period))
                         }
                     }
                     .padding(.vertical)

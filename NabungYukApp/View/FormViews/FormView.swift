@@ -105,7 +105,14 @@ struct FormView: View {
                     
                 }
             } message: {
-                Text("23 Maret 2023 (54 Hari)")
+                let targetSavingInt = Int(targetSaving) ?? 0
+                let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
+                
+                if targetSavingInt != 0 && savingPerPeriodInt != 0 {
+                    Text(estimateCompletionDate(savingTarget: Double(targetSaving) ?? 0, savingPerPeriod: Double(savingPerPeriod) ?? 0, period: period))
+                } else {
+                    Text("Isi terlebih dahulu target tabungan dan nominal pengisian tiap periode")
+                }
             }
             .navigationTitle("Tambah Tabungan")
             .navigationBarTitleDisplayMode(.large)
