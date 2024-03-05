@@ -16,6 +16,7 @@ struct SavingGoal: Identifiable {
     var dummyImage: String
     var category: Category
     var createdAt = Date()
+    var gatheredAmount = 0
 }
 
 enum PeriodSelection: String, CaseIterable {

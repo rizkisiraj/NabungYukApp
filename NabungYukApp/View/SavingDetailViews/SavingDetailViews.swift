@@ -26,17 +26,15 @@ struct SavingDetailViews: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Rp500.000")
+                            Text(formatNumberToRupiah(number: content.target))
                                 .font(.system(size: 24))
                                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                            Text("Rp100.000 Harian")
+                            Text("\(formatNumberToRupiah(number: content.targetSavePerPeriod)) \(content.period.rawValue)")
                                 .font(.headline)
                         }
                         Spacer()
                         ZStack {
-                                        // 2
                             CircularProgressView(progress: 0.4)
-                            // 3
                             Text("\(0.4 * 100, specifier: "%.0f")%")
                                 .font(.system(size: 14))
                                 .bold()
@@ -49,7 +47,7 @@ struct SavingDetailViews: View {
                             Text("Tanggal Dibuat")
                                 .font(.headline)
                             Spacer()
-                            Text("23 Maret 2023")
+                            Text(formatDateToIndonesian(date: content.createdAt))
                         }
                         HStack {
                             Text("Estimasi Tercapai")

@@ -38,7 +38,7 @@ struct SavingCard: View {
                     Text("Current Amount")
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
-                    Text("Rp50.000")
+                    Text(formatNumberToRupiah(number: content.gatheredAmount))
                         .font(.system(size: 14))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.primary)
@@ -48,7 +48,7 @@ struct SavingCard: View {
                     Text("Goal")
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
-                    Text("Rp120.000.000")
+                    Text(formatNumberToRupiah(number: content.target))
                         .font(.system(size: 14))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.green)
@@ -56,7 +56,7 @@ struct SavingCard: View {
             }
             .padding(.horizontal)
             
-            ProgressView(value: 50000, total: 120000000)
+            ProgressView(value: Double(content.gatheredAmount), total: Double(content.target))
                 .padding([.horizontal, .bottom])
                 .tint(.green)
         }

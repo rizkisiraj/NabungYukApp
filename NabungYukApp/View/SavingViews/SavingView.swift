@@ -26,16 +26,27 @@ struct SavingView: View {
                     .pickerStyle(.segmented)
                     .padding()
                         VStack(spacing: 14) {
-                            ForEach(savingVM.savings) { saving in
-                                NavigationLink {
-                                    SavingDetailViews(content: saving)
-                                } label: {
-                                    SavingCard(content: saving)
+                            if savingVM.savings.isEmpty {
+                                Spacer()
+                                VStack {
+                                    Image("noneImage")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 200, height: 200)
+                                    Text("Belum ada tabungan")
                                 }
                                 
+                            } else {
+                                ForEach(savingVM.savings) { saving in
+                                    NavigationLink {
+                                        SavingDetailViews(content: saving)
+                                    } label: {
+                                        SavingCard(content: saving)
+                                    }
+                                    
+                                }
+                                Spacer()
                             }
-                            
-                            Spacer()
                         }
                         .padding(.horizontal)
                     }
