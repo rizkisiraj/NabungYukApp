@@ -39,7 +39,7 @@ struct SavingView: View {
                             } else {
                                 ForEach(savingVM.savings) { saving in
                                     NavigationLink {
-                                        SavingDetailViews(content: saving)
+                                        SavingDetailViews(content: saving, savingVM: savingVM)
                                     } label: {
                                         SavingCard(content: saving)
                                     }
