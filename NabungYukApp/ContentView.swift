@@ -9,14 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView {
             SavingView()
                 .tabItem {
                     Label("Tabungan", systemImage: "wallet.pass")
             }
                 .tint(.green)
-        }
-        .tint(.green)
     }
 }
 

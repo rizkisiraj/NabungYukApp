@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SavingDetailViews: View {
     @State private var isPresented = false
+    @State private var imageScale: CGFloat = 0.1
     var content: SavingGoal
     var savingVM: SavingVM
     
@@ -25,6 +26,12 @@ struct SavingDetailViews: View {
                             .scaledToFit()
                             .frame(width: 80, height: 80)
                             .foregroundStyle(.green)
+                            .scaleEffect(imageScale)
+                            .onAppear {
+                                withAnimation(.easeOut(duration: 0.5)) {
+                                    imageScale = 1
+                                }
+                            }
                     }
                     VStack {
                         HStack {
@@ -70,8 +77,7 @@ struct SavingDetailViews: View {
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .foregroundStyle(.green)
                             }
-                            Spacer()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                            .padding(.trailing, 32)
                             VStack(spacing: 4) {
                                 Text("Tersisa")
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)

@@ -42,6 +42,39 @@ struct SavingDetailForm: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(.black.opacity(0.3), lineWidth: 2)
             }
+            HStack {
+                if recordType == HistoryType.insert {
+                    Button {
+                        amount = String(content.targetSavePerPeriod)
+                    } label: {
+                        Text("\(content.targetSavePerPeriod)")
+                            .foregroundStyle(.primary)
+                            .padding(8)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(lineWidth: 1)
+                            }
+                    }
+                    .transition(.opacity)
+                    
+                    Button {
+                        amount = String(content.target - content.gatheredAmount)
+                    } label: {
+                        Text("\(content.target - content.gatheredAmount)")
+                            .foregroundStyle(.primary)
+                            .padding(8)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(lineWidth: 1)
+                            }
+                    }
+                    
+                    Spacer()
+                }
+
+            }
+            .tint(.black)
+            .animation(.easeOut, value: recordType)
             
             Button {
                 let amountInt = Int(amount) ?? 0
@@ -63,6 +96,18 @@ struct SavingDetailForm: View {
             
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isPresented = false
+                } label: {
+                    Image(systemName: "xmark")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
+                .clipShape(Circle())
+            }
+        }
     }
 }
 
