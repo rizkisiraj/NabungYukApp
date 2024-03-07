@@ -35,4 +35,21 @@ class SavingVM: ObservableObject {
         }
         
     }
+    
+    func editSavingGoal(newSaving: SavingGoal) {
+        if let editedSavingIndex = savings.firstIndex(where: { $0.id == newSaving.id }) {
+            savings[editedSavingIndex] = newSaving
+        }
+        
+    }
+    
+    func deleteTabungan(savingId: UUID) {
+        self.savings = savings.filter({ $0.id != savingId })
+        
+        deleteHistory(savingId: savingId)
+    }
+    
+    func deleteHistory(savingId: UUID) {
+        self.savingHistories = savingHistories.filter({ $0.savingId != savingId })
+    }
 }

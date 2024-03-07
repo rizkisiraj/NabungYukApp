@@ -15,6 +15,20 @@ struct SavingView: View {
         case berlangsung, tercapai
     }
     
+    private var filteredSavings: [SavingGoal] {
+        switch preferredListTabungan {
+        case .berlangsung:
+            savingVM.savings.filter { 
+                $0.target > $0.gatheredAmount
+            }.reversed()
+        case .tercapai:
+            savingVM.savings.filter {
+                $0.target <= $0.gatheredAmount
+            }.reversed()
+        }
+    
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -37,17 +51,26 @@ struct SavingView: View {
                                 }
                                 
                             } else {
-                                ForEach(savingVM.savings) { saving in
+                                ForEach(filteredSavings) { saving in
                                     NavigationLink {
                                         SavingDetailViews(content: saving, savingVM: savingVM)
                                     } label: {
                                         SavingCard(content: saving)
+                                            .animation(.easeInOut, value: savingVM.savings.count)
                                     }
+                                    .contextMenu(ContextMenu(menuItems: {
+                                        Button {
+                                            savingVM.deleteTabungan(savingId: saving.id)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }))
                                     
                                 }
                                 Spacer()
                             }
                         }
+                        .transition(.slide)
                         .padding(.horizontal)
                     }
                 }
@@ -69,6 +92,18 @@ struct SavingView: View {
                 .sheet(isPresented: $isSheetShowing) {
                     NavigationStack {
                         FormView(savingVM: savingVM, isSheetShowing: $isSheetShowing)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button {
+                                        isSheetShowing = false
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                                    .clipShape(Circle())
+                                }
+                            }
                     }
                     
                 }

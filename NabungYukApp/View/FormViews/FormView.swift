@@ -21,6 +21,7 @@ struct FormView: View {
     @State private var period: PeriodSelection = PeriodSelection.daily
     @State private var selectedCategory = Category.travel
     @State private var isModalShowing = false
+    var savingGoal: SavingGoal?
     
     @FocusState private var focusedField: FocusedField?
     
@@ -114,28 +115,28 @@ struct FormView: View {
                     Text("Isi terlebih dahulu target tabungan dan nominal pengisian tiap periode")
                 }
             }
-            .navigationTitle("Tambah Tabungan")
+            .navigationTitle(savingGoal != nil ? "Edit Tabungan" : "Tambah Tabungan")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        isSheetShowing = false
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
-                    .clipShape(Circle())
-                }
-                
                 ToolbarItem(placement: .bottomBar) {
                     Button {
                         let targetSavingInt = Int(targetSaving) ?? 0
                         let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
                         
                         if targetSavingInt != 0 && savingPerPeriodInt != 0 {
-                            let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
-                            savingVM.addSavingGoal(savingGoal: newSavingGoal)
+        
+                            if var goal = savingGoal {
+                                goal.title = savingName
+                                goal.target = targetSavingInt
+                                goal.targetSavePerPeriod = savingPerPeriodInt
+                                goal.period = period
+                                goal.category = selectedCategory
+                                savingVM.editSavingGoal(newSaving: goal)
+                            } else {
+                                let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
+                                savingVM.addSavingGoal(savingGoal: newSavingGoal)
+                            }
+                            
                             isSheetShowing = false
                         } else {
                             print("Ada yang salah teman")
@@ -147,6 +148,15 @@ struct FormView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .clipShape(Capsule())
+                }
+            }
+            .onAppear {
+                if let goal = savingGoal {
+                    self.savingName = goal.title
+                    self.targetSaving = String(goal.target)
+                    self.savingPerPeriod = String(goal.targetSavePerPeriod)
+                    self.period = goal.period
+                    self.selectedCategory = goal.category
                 }
             }
     }

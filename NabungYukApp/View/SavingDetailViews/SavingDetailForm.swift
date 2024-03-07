@@ -96,18 +96,6 @@ struct SavingDetailForm: View {
             
         }
         .padding()
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    isPresented = false
-                } label: {
-                    Image(systemName: "xmark")
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
-                .clipShape(Circle())
-            }
-        }
     }
 }
 
