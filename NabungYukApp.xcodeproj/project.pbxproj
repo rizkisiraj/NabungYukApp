@@ -27,6 +27,7 @@
 		7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */; };
 		7ECBB95C2B94B65400ACE007 /* SavingDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */; };
 		7ECBB95E2B94BDA700ACE007 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */; };
+		7ECDF5282B9B116F00C45B4E /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECDF5272B9B116F00C45B4E /* CustomTextfield.swift */; };
 		7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF59F22B9444A9002470C8 /* ModalDialog.swift */; };
 		7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0B2B8EF90800609E44 /* SavingView.swift */; };
 		7EF21C0E2B8EFDC800609E44 /* SavingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */; };
@@ -75,6 +76,7 @@
 		7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDotIndicator.swift; sourceTree = "<group>"; };
 		7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDetailViews.swift; sourceTree = "<group>"; };
 		7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		7ECDF5272B9B116F00C45B4E /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		7EDF59F22B9444A9002470C8 /* ModalDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDialog.swift; sourceTree = "<group>"; };
 		7EF21C0B2B8EF90800609E44 /* SavingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingView.swift; sourceTree = "<group>"; };
 		7EF21C0D2B8EFDC800609E44 /* SavingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGoal.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				7E90D3842B906210004F0337 /* FormView.swift */,
 				7E90D3862B9065F5004F0337 /* NumbersOnlyViewModifier.swift */,
 				7EDF59F22B9444A9002470C8 /* ModalDialog.swift */,
+				7ECDF5272B9B116F00C45B4E /* CustomTextfield.swift */,
 			);
 			path = FormViews;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ECDF5282B9B116F00C45B4E /* CustomTextfield.swift in Sources */,
 				7EAAD0392B98457D00E014CF /* History.swift in Sources */,
 				7E6133902B958FD50007268E /* SavingVM.swift in Sources */,
 				7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */,

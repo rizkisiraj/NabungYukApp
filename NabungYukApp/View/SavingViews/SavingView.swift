@@ -40,7 +40,7 @@ struct SavingView: View {
                     .pickerStyle(.segmented)
                     .padding()
                         VStack(spacing: 14) {
-                            if savingVM.savings.isEmpty {
+                            if filteredSavings.isEmpty {
                                 Spacer()
                                 VStack {
                                     Image("noneImage")

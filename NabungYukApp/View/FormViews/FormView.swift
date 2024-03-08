@@ -7,12 +7,33 @@
 
 import SwiftUI
 
-struct FormView: View {
-    enum FocusedField {
-        case targetSaving
-        case savingPerPeriod
-    }
+class InputValidation: ObservableObject {
+    @Published var savingNameIsValid = true
+    @Published var targetSavingIsValid = true
+    @Published var savingPerPeriodIsValid = true
     
+    @Published var savingNameErrorText = ""
+    @Published var targetSavingErrorText = ""
+    @Published var savingPerPeriodErrorText = ""
+}
+
+enum FocusedField {
+    case targetSaving
+    case savingPerPeriod
+    case savingName
+}
+
+struct FormView: View {
+    @State var savingNameIsValid = true
+    @State var targetSavingIsValid = true
+    @State var savingPerPeriodIsValid = true
+    
+    @State var savingNameErrorText = ""
+    @State var targetSavingErrorText = ""
+    @State var savingPerPeriodErrorText = ""
+    
+    @State private var forceUpdate = false
+    @State private var inputValidation = InputValidation()
     @StateObject var savingVM: SavingVM
     @Binding var isSheetShowing: Bool
     @State private var savingName = ""
@@ -22,38 +43,16 @@ struct FormView: View {
     @State private var selectedCategory = Category.travel
     @State private var isModalShowing = false
     var savingGoal: SavingGoal?
-    
     @FocusState private var focusedField: FocusedField?
     
     var body: some View {
             VStack(alignment: .leading,spacing: 16) {
-                HStack {
-                    Image(systemName: "text.alignleft")
-                    Spacer(minLength: 20)
-                    TextField("Nama Tabungan", text: $savingName)
-                        .autocorrectionDisabled()
-                        .padding()
-                        .background(.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.black.opacity(0.3), lineWidth: 2)
-                        }
-                }
-                HStack {
-                    Image(systemName: "number")
-                    Spacer(minLength: 20)
-                    TextField("Target Tabungan", text: $targetSaving)
+                
+                CustomTextfield(text: $savingName, icon: "text.alignleft", title: "Nama Tabungan", type: .text, isValid: $savingNameIsValid, errorMessage: $savingNameErrorText)
+                    .focused($focusedField, equals: .savingName)
+                
+                CustomTextfield(text: $targetSaving, icon: "number", title: "Target Tabungan", type: .number, isValid: $targetSavingIsValid, errorMessage: $targetSavingErrorText)
                             .focused($focusedField, equals: .targetSaving)
-                        .numbersOnly($targetSaving)
-                        .padding()
-                        .background(.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.black.opacity(0.3), lineWidth: 2)
-                    }
-                }
                 
                 Text("Kategori")
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -78,16 +77,8 @@ struct FormView: View {
                     .pickerStyle(.segmented)
                 }
                 HStack {
-                    TextField("Nominal Pengisian", text: $savingPerPeriod)
-                        .focused($focusedField, equals: .savingPerPeriod)
-                        .numbersOnly($savingPerPeriod)
-                        .padding()
-                        .background(.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.black.opacity(0.3), lineWidth: 2)
-                        }
+                    CustomTextfield(text: $savingPerPeriod, title: "Nominal Pengisian", type: .number, isValid: $savingPerPeriodIsValid, errorMessage: $savingPerPeriodErrorText)
+                                .focused($focusedField, equals: .savingPerPeriod)
                     Button {
                         isModalShowing = true
                     } label: {
@@ -120,11 +111,29 @@ struct FormView: View {
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
+                        ResetValidation()
+                        
                         let targetSavingInt = Int(targetSaving) ?? 0
                         let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
                         
-                        if targetSavingInt != 0 && savingPerPeriodInt != 0 {
-        
+                        if savingName.isEmpty {
+                            savingNameIsValid = false
+                            savingNameErrorText = "Nama tidak boleh kosong"
+                        }
+                        
+                        if targetSavingInt == 0 || savingPerPeriodInt > targetSavingInt {
+                            targetSavingIsValid = false
+                            targetSavingErrorText = "Target tidak boleh lebih kecil dari nominal pengisian"
+                            focusedField = .targetSaving
+                        }
+                        
+                        if savingPerPeriodInt == 0 {
+                            savingPerPeriodIsValid = false
+                            savingPerPeriodErrorText = "Nominal pengisian tidak boleh kosong"
+                            focusedField = .savingPerPeriod
+                        }
+                        
+                        if savingNameIsValid && targetSavingIsValid && savingPerPeriodIsValid {
                             if var goal = savingGoal {
                                 goal.title = savingName
                                 goal.target = targetSavingInt
@@ -136,13 +145,11 @@ struct FormView: View {
                                 let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
                                 savingVM.addSavingGoal(savingGoal: newSavingGoal)
                             }
-                            
                             isSheetShowing = false
-                        } else {
-                            print("Ada yang salah teman")
+                            return
                         }
                     } label: {
-                        Text("Tambah")
+                        Text(savingGoal != nil ? "Simpan" : "Tambah" )
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
@@ -160,10 +167,28 @@ struct FormView: View {
                 }
             }
     }
+    
+    func ResetValidation() {
+        savingNameIsValid = true
+        targetSavingIsValid = true
+        savingPerPeriodIsValid = true
+        
+        savingNameErrorText = ""
+        targetSavingErrorText = ""
+        savingPerPeriodErrorText = ""
+    }
 }
 
 #Preview {
-    FormView(savingVM: SavingVM(), isSheetShowing: .constant(false))
+    Button("Saya") {
+        
+    }
+    .sheet(isPresented: .constant(true)) {
+            NavigationStack {
+                FormView(savingVM: SavingVM(), isSheetShowing: .constant(false))
+            }
+        }
+    
 }
 
 struct CategoryCard: View {
