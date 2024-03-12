@@ -12,12 +12,25 @@ struct SavingDetailViews: View {
     @State private var isDeleting = false
     @State private var imageScale: CGFloat = 0.1
     @State private var isEditing = false
+    @State private var cobaSavingGoal: SavingGoal?
     var content: SavingGoal
-    var savingVM: SavingVM
+    @ObservedObject var savingVM: SavingVM
+    
+    var contentId: SavingGoal {
+        savingVM.savings.first(where: {
+            $0.id == content.id
+        }) ?? SavingGoal.savingGoals[0]
+    }
+    
+    var savingHistories: [History] {
+        savingVM.savingHistories.filter({
+            $0.savingId == content.id
+        })
+    }
     
     var body: some View {
         if isEditing {
-            FormView(savingVM: savingVM, isSheetShowing: $isEditing, savingGoal: content)
+            FormView(savingVM: savingVM, isSheetShowing: $isEditing, savingGoal: contentId)
                 .background(.ultraThinMaterial)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -41,7 +54,7 @@ struct SavingDetailViews: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.green.secondary)
                                 .frame(width: .infinity, height: 200)
-                            Image(systemName: content.category.rawValue)
+                            Image(systemName: contentId.category.rawValue)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
@@ -56,16 +69,16 @@ struct SavingDetailViews: View {
                         VStack {
                             HStack {
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text(formatNumberToRupiah(number: content.target))
+                                    Text(formatNumberToRupiah(number: contentId.target))
                                         .font(.system(size: 24))
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text("\(formatNumberToRupiah(number: content.targetSavePerPeriod)) \(content.period.rawValue)")
+                                    Text("\(formatNumberToRupiah(number: contentId.targetSavePerPeriod)) \(contentId.period.rawValue)")
                                         .font(.headline)
                                 }
                                 Spacer()
                                 ZStack {
-                                    CircularProgressView(progress: generatePercentage(target:content.target, process: content.gatheredAmount))
-                                    Text("\(generatePercentage(target:content.target, process: content.gatheredAmount) * 100, specifier: "%.0f")%")
+                                    CircularProgressView(progress: generatePercentage(target:contentId.target, process: contentId.gatheredAmount))
+                                    Text("\(generatePercentage(target:contentId.target, process: contentId.gatheredAmount) * 100, specifier: "%.0f")%")
                                         .font(.system(size: 14))
                                         .bold()
                                 }.frame(width: 50, height: 50)
@@ -77,13 +90,13 @@ struct SavingDetailViews: View {
                                     Text("Tanggal Dibuat")
                                         .font(.headline)
                                     Spacer()
-                                    Text(formatDateToIndonesian(date: content.createdAt))
+                                    Text(formatDateToIndonesian(date: contentId.createdAt))
                                 }
                                 HStack {
                                     Text("Estimasi Tercapai")
                                         .font(.headline)
                                     Spacer()
-                                    Text(timeToReachTarget(target: content.target, savingsPerPeriod:content.targetSavePerPeriod, period:content.period))
+                                    Text(timeToReachTarget(target: contentId.target, savingsPerPeriod:contentId.targetSavePerPeriod, period:contentId.period))
                                 }
                             }
                             .padding(.vertical)
@@ -92,7 +105,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Terkumpul")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (content.gatheredAmount)))
+                                    Text(formatNumberToRupiah(number: (contentId.gatheredAmount)))
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.green)
@@ -101,7 +114,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Tersisa")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (content.target - content.gatheredAmount)))
+                                    Text(formatNumberToRupiah(number: (contentId.target - contentId.gatheredAmount)))
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.red)
@@ -114,7 +127,7 @@ struct SavingDetailViews: View {
                                 Text("Riwayat")
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .padding(.bottom, 10)
-                                ForEach(savingVM.savingHistories, id: \.id) { history in
+                                ForEach(savingHistories, id: \.id) { history in
                                     
                                     HStack {
                                         Text(formatDateToIndonesian(date: history.createdAt))
@@ -140,12 +153,14 @@ struct SavingDetailViews: View {
                         }
                     }
                     .padding(.horizontal)
-                    .navigationTitle(content.title)
+                    .navigationTitle(contentId.title)
                     .toolbar(.hidden, for: .tabBar)
                     
                 }
                 .background(.ultraThinMaterial)
+                if contentId.gatheredAmount < contentId.target {
                     Button {
+                        print(contentId)
                         isPresented = true
                     } label: {
                         HStack {
@@ -159,8 +174,9 @@ struct SavingDetailViews: View {
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-
-                .padding()
+                    
+                    .padding()
+                }
             }
             .sheet(isPresented: $isPresented) {
                 NavigationStack {
