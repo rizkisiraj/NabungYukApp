@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SavingCard: View {
     var content: SavingGoal
+    var count: Int
+    var action: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -63,10 +65,18 @@ struct SavingCard: View {
         .tint(.primary)
         .background(.cardBg)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .animation(.easeInOut, value: count)
+        .contextMenu(ContextMenu(menuItems: {
+            Button {
+                action()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }))
     }
 }
 
 #Preview {
-    SavingCard(content: SavingGoal.savingGoals[0])
+    SavingCard(content: SavingGoal.savingGoals[0], count: 2, action: { print("Test") } )
         .preferredColorScheme(.dark)
 }

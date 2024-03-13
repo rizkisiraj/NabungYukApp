@@ -9,9 +9,7 @@ import Foundation
 
 @MainActor
 class SavingVM: ObservableObject {
-    @Published var savings: [SavingGoal] = [
-        SavingGoal.savingGoals[0]
-    ]
+    @Published var savings: [SavingGoal] = []
     @Published var savingHistories: [History] = []
     
     func addSavingGoal(savingGoal: SavingGoal) {

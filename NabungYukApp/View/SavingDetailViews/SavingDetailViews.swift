@@ -15,6 +15,7 @@ struct SavingDetailViews: View {
     @State private var cobaSavingGoal: SavingGoal?
     var content: SavingGoal
     @ObservedObject var savingVM: SavingVM
+    @StateObject var viewModel: SavingDetailVM
     
     var contentId: SavingGoal {
         savingVM.savings.first(where: {
@@ -50,6 +51,7 @@ struct SavingDetailViews: View {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(.vertical) {
                     VStack(spacing: 10) {
+                        Text("\(viewModel.contentId.gatheredAmount)")
                         ZStack {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.green.secondary)
@@ -96,7 +98,7 @@ struct SavingDetailViews: View {
                                     Text("Estimasi Tercapai")
                                         .font(.headline)
                                     Spacer()
-                                    Text(timeToReachTarget(target: contentId.target, savingsPerPeriod:contentId.targetSavePerPeriod, period:contentId.period))
+                                    Text(timeToReachTarget(target: contentId.target-contentId.gatheredAmount, savingsPerPeriod:contentId.targetSavePerPeriod, period:contentId.period))
                                 }
                             }
                             .padding(.vertical)
@@ -160,7 +162,6 @@ struct SavingDetailViews: View {
                 .background(.ultraThinMaterial)
                 if contentId.gatheredAmount < contentId.target {
                     Button {
-                        print(contentId)
                         isPresented = true
                     } label: {
                         HStack {
@@ -205,7 +206,7 @@ struct SavingDetailViews: View {
 
 #Preview {
     NavigationStack {
-        SavingDetailViews(content: SavingGoal.savingGoals[0], savingVM: SavingVM())
+        SavingDetailViews(content: SavingGoal.savingGoals[0], savingVM: SavingVM(), viewModel: SavingDetailVM(content: SavingGoal.savingGoals[0], savingVM: SavingVM()))
     }
     .preferredColorScheme(.dark)
 }

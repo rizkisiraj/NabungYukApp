@@ -41,30 +41,17 @@ struct SavingView: View {
                     .padding()
                         VStack(spacing: 14) {
                             if filteredSavings.isEmpty {
-                                Spacer()
-                                VStack {
-                                    Image("noneImage")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 200, height: 200)
-                                    Text("Belum ada tabungan")
-                                }
-                                
+                                EmptySavingListPlaceholder()
                             } else {
                                 ForEach(filteredSavings) { saving in
                                     NavigationLink {
-                                        SavingDetailViews(content: saving, savingVM: savingVM)
+                                        let savingDetailVM = SavingDetailVM(content: saving, savingVM: savingVM)
+                                        SavingDetailViews(content: saving, savingVM: savingVM, viewModel: savingDetailVM)
                                     } label: {
-                                        SavingCard(content: saving)
-                                            .animation(.easeInOut, value: savingVM.savings.count)
-                                    }
-                                    .contextMenu(ContextMenu(menuItems: {
-                                        Button {
+                                        SavingCard(content: saving, count: filteredSavings.count, action: {
                                             savingVM.deleteTabungan(savingId: saving.id)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    }))
+                                        })
+                                    }
                                     
                                 }
                                 Spacer()
@@ -115,23 +102,14 @@ struct SavingView: View {
     SavingView()
 }
 
-//HStack {
-////                    VStack(alignment: .leading) {
-////                        Text("Total Savings")
-////                            .font(.caption)
-////                            .foregroundStyle(.secondary)
-////                        Text("Rp 40.000,00")
-////                            .fontWeight(.bold)
-////                    }
-////
-////                    Spacer()
-////
-////                    Button {
-////
-////                    } label: {
-////                        Text("View Analytics")
-////                            .font(.system(size: 14))
-////                            .underline()
-////                    }
-////                }
-////                .padding()
+@ViewBuilder
+func EmptySavingListPlaceholder() -> some View {
+    Spacer()
+    VStack {
+        Image("noneImage")
+            .resizable()
+            .scaledToFill()
+            .frame(width: 200, height: 200)
+        Text("Belum ada tabungan")
+    }
+}
