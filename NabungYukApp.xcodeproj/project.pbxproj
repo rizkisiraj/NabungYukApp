@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E29D15E2BA49A400043CF07 /* SavingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E29D15D2BA49A400043CF07 /* SavingList.swift */; };
 		7E37D3992B93789F0005236C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E37D3982B93789F0005236C /* LaunchScreen.storyboard */; };
+		7E4221892BA44B66002DAE3E /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4221882BA44B66002DAE3E /* FormViewModel.swift */; };
 		7E6133902B958FD50007268E /* SavingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E61338F2B958FD50007268E /* SavingVM.swift */; };
 		7E68E8432B98A96700736422 /* SavingDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E68E8422B98A96700736422 /* SavingDetailVM.swift */; };
 		7E90D3852B906210004F0337 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E90D3842B906210004F0337 /* FormView.swift */; };
@@ -25,7 +27,7 @@
 		7EAD219D2B8E1FD000368DEA /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219C2B8E1FD000368DEA /* Onboarding.swift */; };
 		7EAD219F2B8E258300368DEA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD219E2B8E258300368DEA /* OnboardingView.swift */; };
 		7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */; };
-		7ECBB95C2B94B65400ACE007 /* SavingDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */; };
+		7ECBB95C2B94B65400ACE007 /* SavingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95B2B94B65400ACE007 /* SavingDetailView.swift */; };
 		7ECBB95E2B94BDA700ACE007 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */; };
 		7ECDF5282B9B116F00C45B4E /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECDF5272B9B116F00C45B4E /* CustomTextfield.swift */; };
 		7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF59F22B9444A9002470C8 /* ModalDialog.swift */; };
@@ -53,7 +55,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E29D15D2BA49A400043CF07 /* SavingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingList.swift; sourceTree = "<group>"; };
 		7E37D3982B93789F0005236C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7E4221882BA44B66002DAE3E /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
 		7E61338F2B958FD50007268E /* SavingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingVM.swift; sourceTree = "<group>"; };
 		7E68E8422B98A96700736422 /* SavingDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDetailVM.swift; sourceTree = "<group>"; };
 		7E90D3842B906210004F0337 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
@@ -74,7 +78,7 @@
 		7EAD219C2B8E1FD000368DEA /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		7EAD219E2B8E258300368DEA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7EAD21A12B8E29B000368DEA /* CustomDotIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDotIndicator.swift; sourceTree = "<group>"; };
-		7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDetailViews.swift; sourceTree = "<group>"; };
+		7ECBB95B2B94B65400ACE007 /* SavingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDetailView.swift; sourceTree = "<group>"; };
 		7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		7ECDF5272B9B116F00C45B4E /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		7EDF59F22B9444A9002470C8 /* ModalDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDialog.swift; sourceTree = "<group>"; };
@@ -109,10 +113,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E29D15C2BA49A2F0043CF07 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7E29D15D2BA49A400043CF07 /* SavingList.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		7E37D3972B93788A0005236C /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				7E37D3982B93789F0005236C /* LaunchScreen.storyboard */,
 			);
 			path = LaunchScreen;
 			sourceTree = "<group>";
@@ -122,6 +133,7 @@
 			children = (
 				7E61338F2B958FD50007268E /* SavingVM.swift */,
 				7E68E8422B98A96700736422 /* SavingDetailVM.swift */,
+				7E4221882BA44B66002DAE3E /* FormViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -210,6 +222,8 @@
 		7EA053592B8E12BA00E08319 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7E29D15C2BA49A2F0043CF07 /* Components */,
+				7EB01A412BA42BF6009FA05E /* Screens */,
 				7ECBB95A2B94B28800ACE007 /* SavingDetailViews */,
 				7E37D3972B93788A0005236C /* LaunchScreen */,
 				7E90D3832B906201004F0337 /* FormViews */,
@@ -238,10 +252,18 @@
 			path = SavingViews;
 			sourceTree = "<group>";
 		};
+		7EB01A412BA42BF6009FA05E /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				7E37D3982B93789F0005236C /* LaunchScreen.storyboard */,
+				7ECBB95B2B94B65400ACE007 /* SavingDetailView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		7ECBB95A2B94B28800ACE007 /* SavingDetailViews */ = {
 			isa = PBXGroup;
 			children = (
-				7ECBB95B2B94B65400ACE007 /* SavingDetailViews.swift */,
 				7ECBB95D2B94BDA700ACE007 /* CircularProgressView.swift */,
 				7EAAD03A2B985D9E00E014CF /* SavingDetailForm.swift */,
 			);
@@ -392,6 +414,7 @@
 				7E6133902B958FD50007268E /* SavingVM.swift in Sources */,
 				7EF21C0C2B8EF90800609E44 /* SavingView.swift in Sources */,
 				7EA0535B2B8E12E200E08319 /* OnboardingSingleView.swift in Sources */,
+				7E29D15E2BA49A400043CF07 /* SavingList.swift in Sources */,
 				7E90D3852B906210004F0337 /* FormView.swift in Sources */,
 				7EA053312B8E129800E08319 /* ContentView.swift in Sources */,
 				7EAD21A22B8E29B000368DEA /* CustomDotIndicator.swift in Sources */,
@@ -404,7 +427,8 @@
 				7E90D3872B9065F5004F0337 /* NumbersOnlyViewModifier.swift in Sources */,
 				7EDF59F32B9444A9002470C8 /* ModalDialog.swift in Sources */,
 				7ECBB95E2B94BDA700ACE007 /* CircularProgressView.swift in Sources */,
-				7ECBB95C2B94B65400ACE007 /* SavingDetailViews.swift in Sources */,
+				7ECBB95C2B94B65400ACE007 /* SavingDetailView.swift in Sources */,
+				7E4221892BA44B66002DAE3E /* FormViewModel.swift in Sources */,
 				7EA0532F2B8E129800E08319 /* NabungYukAppApp.swift in Sources */,
 				7EF21C102B8F02CE00609E44 /* SavingCard.swift in Sources */,
 			);

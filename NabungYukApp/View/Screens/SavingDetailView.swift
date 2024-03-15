@@ -167,7 +167,7 @@ struct SavingDetailViews: View {
             }
             .sheet(isPresented: $isPresented) {
                 NavigationStack {
-                    SavingDetailForm(isPresented: $isPresented, saving: contentSuave, incomeHandler: editSavingIncome)
+                    SavingDetailForm(saving: contentSuave, incomeHandler: editSavingIncome)
                         .navigationBarTitleDisplayMode(.inline)
                 }.presentationDetents([.medium])
             }
@@ -202,5 +202,6 @@ extension SavingDetailViews {
         guard amount >= 0 else { return }
         
         contentSuave.gatheredAmount += amount
+        isPresented = false
     }
 }
