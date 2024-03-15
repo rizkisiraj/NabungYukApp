@@ -6,13 +6,57 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SavingList: View {
+    @Query var savings: [SavingGoal]
+    var action: (SavingGoal) -> Void
+    
+    init(tabunganToShow: Tabungan, action: @escaping (SavingGoal) -> Void) {
+        switch tabunganToShow {
+        case .berlangsung:
+            _savings = Query(filter: #Predicate<SavingGoal> { saving in
+                    saving.gatheredAmount < saving.target
+            }, sort: \SavingGoal.createdAt)
+        case .tercapai:
+            _savings = Query(filter: #Predicate<SavingGoal> { saving in
+                    saving.gatheredAmount >= saving.target
+            }, sort: \SavingGoal.createdAt)
+        }
+        self.action = action
+    }
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 14) {
+            if savings.isEmpty {
+                EmptySavingListPlaceholder()
+            } else {
+                ForEach(savings) { saving in
+                    NavigationLink {
+                        SavingDetailViews(contentSuave: saving)
+                    } label: {
+                        SavingCard(content: saving, count: savings.count)
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button {
+                                    action(saving)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }))
+                    }
+                }
+                Spacer()
+            }
+        }
+        .transition(.slide)
+        .padding(.horizontal)
     }
 }
 
 #Preview {
-    SavingList()
+    let myFunction: (SavingGoal) -> Void = { saving in
+        print(saving.title)
+    }
+    return SavingList(tabunganToShow: .berlangsung, action: myFunction)
 }
