@@ -13,10 +13,9 @@ enum Tabungan {
 }
 
 struct SavingView: View {
-    @Query var shavings: [SavingGoal]
-    @StateObject var savingVM: SavingVM
+    @Environment(\.modelContext) var modelContext
     @State private var isSheetShowing = false
-    @Binding var preferredListTabungan: Tabungan
+    @State private var preferredListTabungan = Tabungan.berlangsung
     
     var body: some View {
         NavigationStack {
@@ -29,24 +28,9 @@ struct SavingView: View {
                     .pickerStyle(.segmented)
                     .padding()
                         VStack(spacing: 14) {
-                            if shavings.isEmpty {
-                                EmptySavingListPlaceholder()
-                            } else {
-                                ForEach(shavings) { saving in
-                                    NavigationLink {
-                                        SavingDetailViews(contentSuave: saving)
-                                    } label: {
-                                        SavingCard(content: saving, count: savingVM.savangs.count, action: {
-                                            savingVM.deleteTabungan(savingId: saving.id)
-                                        })
-                                    }
-                                    
-                                }
-                                Spacer()
-                            }
+                            SavingList(tabunganToShow: preferredListTabungan, action: deleteTabungan)
                         }
                         .transition(.slide)
-                        .padding(.horizontal)
                     }
                 }
                 .background(.ultraThinMaterial)
@@ -66,19 +50,19 @@ struct SavingView: View {
                 }
                 .sheet(isPresented: $isSheetShowing) {
                     NavigationStack {
-                        FormView(savingVM: savingVM, isSheetShowing: $isSheetShowing)
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button {
-                                        isSheetShowing = false
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.red)
-                                    .clipShape(Circle())
-                                }
-                            }
+//                        FormView(savingVM: savingVM, isSheetShowing: $isSheetShowing)
+//                            .toolbar {
+//                                ToolbarItem(placement: .topBarTrailing) {
+//                                    Button {
+//                                        isSheetShowing = false
+//                                    } label: {
+//                                        Image(systemName: "xmark")
+//                                    }
+//                                    .buttonStyle(.borderedProminent)
+//                                    .tint(.red)
+//                                    .clipShape(Circle())
+//                                }
+//                            }
                     }
                     
                 }
@@ -87,7 +71,7 @@ struct SavingView: View {
     }
 
 #Preview {
-    SavingView(savingVM: SavingVM(), preferredListTabungan: .constant(Tabungan.berlangsung))
+    SavingView()
 }
 
 @ViewBuilder
@@ -99,5 +83,11 @@ func EmptySavingListPlaceholder() -> some View {
             .scaledToFill()
             .frame(width: 200, height: 200)
         Text("Belum ada tabungan")
+    }
+}
+
+extension SavingView {
+    func deleteTabungan(saving: SavingGoal) {
+        modelContext.delete(saving)
     }
 }
