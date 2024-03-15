@@ -6,26 +6,56 @@
 //
 
 import Foundation
+import SwiftData
 
-struct SavingGoal: Identifiable {
+@Model
+class SavingGoal: Identifiable {
     var id = UUID()
     var title: String
     var target: Int
-    var period: PeriodSelection
     var targetSavePerPeriod: Int
     var dummyImage: String
-    var category: Category
-    var createdAt = Date()
+    var createdAt: Date = Date()
     var gatheredAmount = 0
+    
+    private var periodString: String
+    var period: PeriodSelection {
+        return PeriodSelection(rawValue: self.periodString)!
+    }
+    
+    private var categoryString: String
+    var category: Category {
+        return Category(rawValue: self.categoryString)!
+    }
+    
+    func setCategory(category: Category) {
+        categoryString = category.rawValue
+    }
+    
+    func setPeriod(period: PeriodSelection) {
+        periodString = period.rawValue
+    }
+    
+    init(id: UUID = UUID(), title: String = "", target: Int = 0, period: PeriodSelection = PeriodSelection.daily, targetSavePerPeriod: Int = 0, dummyImage: String = "", category: Category = Category.education, createdAt: Date = .now, gatheredAmount: Int = 0) {
+        self.id = id
+        self.title = title
+        self.target = target
+        self.targetSavePerPeriod = targetSavePerPeriod
+        self.dummyImage = dummyImage
+        self.categoryString = category.rawValue
+        self.createdAt = createdAt
+        self.gatheredAmount = gatheredAmount
+        self.periodString = period.rawValue
+    }
 }
 
-enum PeriodSelection: String, CaseIterable {
+enum PeriodSelection: String, CaseIterable, Codable {
     case daily = "Harian"
     case weekly = "Mingguan"
     case monthly = "Bulanan"
 }
 
-enum Category: String, CaseIterable {
+enum Category: String, CaseIterable, Codable {
     case travel = "airplane"
     case entertainment = "film.fill"
     case education = "book.fill"

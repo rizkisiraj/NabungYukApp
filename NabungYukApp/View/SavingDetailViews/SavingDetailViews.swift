@@ -8,55 +8,41 @@
 import SwiftUI
 
 struct SavingDetailViews: View {
+    @Environment(\.modelContext) var modelContext
     @State private var isPresented = false
     @State private var isDeleting = false
     @State private var imageScale: CGFloat = 0.1
     @State private var isEditing = false
-    @State private var cobaSavingGoal: SavingGoal?
-    var content: SavingGoal
-    @ObservedObject var savingVM: SavingVM
-    @StateObject var viewModel: SavingDetailVM
     
-    var contentId: SavingGoal {
-        savingVM.savings.first(where: {
-            $0.id == content.id
-        }) ?? SavingGoal.savingGoals[0]
-    }
-    
-    var savingHistories: [History] {
-        savingVM.savingHistories.filter({
-            $0.savingId == content.id
-        })
-    }
+    @Bindable var contentSuave: SavingGoal
     
     var body: some View {
         if isEditing {
-            FormView(savingVM: savingVM, isSheetShowing: $isEditing, savingGoal: contentId)
-                .background(.ultraThinMaterial)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            withAnimation {
-                                isEditing = false
-                            }
-                            
-                        } label: {
-                                Text("Cancel")
-                        }
-                        .tint(.green)
-                    }
-                    
-            }
+//            FormView(savingVM: savingVM, isSheetShowing: $isEditing, savingGoal: contentSuave)
+//                .background(.ultraThinMaterial)
+//                .toolbar {
+//                    ToolbarItem(placement: .topBarTrailing) {
+//                        Button {
+//                            withAnimation {
+//                                isEditing = false
+//                            }
+//                            
+//                        } label: {
+//                                Text("Cancel")
+//                        }
+//                        .tint(.green)
+//                    }
+//                    
+//            }
         } else {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(.vertical) {
                     VStack(spacing: 10) {
-                        Text("\(viewModel.contentId.gatheredAmount)")
                         ZStack {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.green.secondary)
                                 .frame(width: .infinity, height: 200)
-                            Image(systemName: contentId.category.rawValue)
+                            Image(systemName: contentSuave.category.rawValue)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
@@ -71,16 +57,16 @@ struct SavingDetailViews: View {
                         VStack {
                             HStack {
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text(formatNumberToRupiah(number: contentId.target))
+                                    Text(formatNumberToRupiah(number: contentSuave.target))
                                         .font(.system(size: 24))
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text("\(formatNumberToRupiah(number: contentId.targetSavePerPeriod)) \(contentId.period.rawValue)")
+                                    Text("\(formatNumberToRupiah(number: contentSuave.targetSavePerPeriod)) \(contentSuave.period.rawValue)")
                                         .font(.headline)
                                 }
                                 Spacer()
                                 ZStack {
-                                    CircularProgressView(progress: generatePercentage(target:contentId.target, process: contentId.gatheredAmount))
-                                    Text("\(generatePercentage(target:contentId.target, process: contentId.gatheredAmount) * 100, specifier: "%.0f")%")
+                                    CircularProgressView(progress: generatePercentage(target:contentSuave.target, process: contentSuave.gatheredAmount))
+                                    Text("\(generatePercentage(target:contentSuave.target, process: contentSuave.gatheredAmount) * 100, specifier: "%.0f")%")
                                         .font(.system(size: 14))
                                         .bold()
                                 }.frame(width: 50, height: 50)
@@ -92,13 +78,13 @@ struct SavingDetailViews: View {
                                     Text("Tanggal Dibuat")
                                         .font(.headline)
                                     Spacer()
-                                    Text(formatDateToIndonesian(date: contentId.createdAt))
+                                    Text(formatDateToIndonesian(date: contentSuave.createdAt))
                                 }
                                 HStack {
                                     Text("Estimasi Tercapai")
                                         .font(.headline)
                                     Spacer()
-                                    Text(timeToReachTarget(target: contentId.target-contentId.gatheredAmount, savingsPerPeriod:contentId.targetSavePerPeriod, period:contentId.period))
+                                    Text(timeToReachTarget(target: contentSuave.target-contentSuave.gatheredAmount, savingsPerPeriod:contentSuave.targetSavePerPeriod, period:contentSuave.period))
                                 }
                             }
                             .padding(.vertical)
@@ -107,7 +93,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Terkumpul")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (contentId.gatheredAmount)))
+                                    Text(formatNumberToRupiah(number: (contentSuave.gatheredAmount)))
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.green)
@@ -116,7 +102,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Tersisa")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (contentId.target - contentId.gatheredAmount)))
+                                    Text(formatNumberToRupiah(number: (contentSuave.target - contentSuave.gatheredAmount)))
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.red)
@@ -129,38 +115,38 @@ struct SavingDetailViews: View {
                                 Text("Riwayat")
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .padding(.bottom, 10)
-                                ForEach(savingHistories, id: \.id) { history in
-                                    
-                                    HStack {
-                                        Text(formatDateToIndonesian(date: history.createdAt))
-                                        Spacer()
-                                        
-                                        switch(history.historyType) {
-                                        case .insert:
-                                            Text("+ \(formatNumberToRupiah(number: history.total))")
-                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                                .foregroundStyle(.green)
-                                        case .withdraw:
-                                            Text("- \(formatNumberToRupiah(number: history.total))")
-                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                                .foregroundStyle(.red)
-                                        }
-                                    }
-                                    .padding(.bottom)
-                                    
-                                }
+//                                ForEach(savingHistories, id: \.id) { history in
+//                                    
+//                                    HStack {
+//                                        Text(formatDateToIndonesian(date: history.createdAt))
+//                                        Spacer()
+//                                        
+//                                        switch(history.historyType) {
+//                                        case .insert:
+//                                            Text("+ \(formatNumberToRupiah(number: history.total))")
+//                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+//                                                .foregroundStyle(.green)
+//                                        case .withdraw:
+//                                            Text("- \(formatNumberToRupiah(number: history.total))")
+//                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+//                                                .foregroundStyle(.red)
+//                                        }
+//                                    }
+//                                    .padding(.bottom)
+//                                    
+//                                }
                             }
                             .padding()
                             .padding(.bottom, 32)
                         }
                     }
                     .padding(.horizontal)
-                    .navigationTitle(contentId.title)
+                    .navigationTitle(contentSuave.title)
                     .toolbar(.hidden, for: .tabBar)
                     
                 }
                 .background(.ultraThinMaterial)
-                if contentId.gatheredAmount < contentId.target {
+                if contentSuave.gatheredAmount < contentSuave.target {
                     Button {
                         isPresented = true
                     } label: {
@@ -181,7 +167,7 @@ struct SavingDetailViews: View {
             }
             .sheet(isPresented: $isPresented) {
                 NavigationStack {
-                    SavingDetailForm(isPresented: $isPresented, content: content, savingVM: savingVM)
+                    SavingDetailForm(isPresented: $isPresented, saving: contentSuave, incomeHandler: editSavingIncome)
                         .navigationBarTitleDisplayMode(.inline)
                 }.presentationDetents([.medium])
             }
@@ -206,7 +192,15 @@ struct SavingDetailViews: View {
 
 #Preview {
     NavigationStack {
-        SavingDetailViews(content: SavingGoal.savingGoals[0], savingVM: SavingVM(), viewModel: SavingDetailVM(content: SavingGoal.savingGoals[0], savingVM: SavingVM()))
+        Text("Siraj")
     }
     .preferredColorScheme(.dark)
+}
+
+extension SavingDetailViews {
+    func editSavingIncome(amount: Int) {
+        guard amount >= 0 else { return }
+        
+        contentSuave.gatheredAmount += amount
+    }
 }

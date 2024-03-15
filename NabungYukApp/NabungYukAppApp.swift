@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct NabungYukAppApp: App {
@@ -18,7 +19,7 @@ struct NabungYukAppApp: App {
             } else {
                 ContentView()
             }
-            
         }
+        .modelContainer(for: SavingGoal.self)
     }
 }

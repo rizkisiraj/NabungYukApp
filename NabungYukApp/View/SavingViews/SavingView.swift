@@ -6,28 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
+
+enum Tabungan {
+    case berlangsung, tercapai
+}
 
 struct SavingView: View {
-    @StateObject private var savingVM = SavingVM()
-    @State private var preferredListTabungan = Tabungan.berlangsung
+    @Query var shavings: [SavingGoal]
+    @StateObject var savingVM: SavingVM
     @State private var isSheetShowing = false
-    enum Tabungan {
-        case berlangsung, tercapai
-    }
-    
-    private var filteredSavings: [SavingGoal] {
-        switch preferredListTabungan {
-        case .berlangsung:
-            savingVM.savings.filter { 
-                $0.target > $0.gatheredAmount
-            }.reversed()
-        case .tercapai:
-            savingVM.savings.filter {
-                $0.target <= $0.gatheredAmount
-            }.reversed()
-        }
-    
-    }
+    @Binding var preferredListTabungan: Tabungan
     
     var body: some View {
         NavigationStack {
@@ -40,15 +29,14 @@ struct SavingView: View {
                     .pickerStyle(.segmented)
                     .padding()
                         VStack(spacing: 14) {
-                            if filteredSavings.isEmpty {
+                            if shavings.isEmpty {
                                 EmptySavingListPlaceholder()
                             } else {
-                                ForEach(filteredSavings) { saving in
+                                ForEach(shavings) { saving in
                                     NavigationLink {
-                                        let savingDetailVM = SavingDetailVM(content: saving, savingVM: savingVM)
-                                        SavingDetailViews(content: saving, savingVM: savingVM, viewModel: savingDetailVM)
+                                        SavingDetailViews(contentSuave: saving)
                                     } label: {
-                                        SavingCard(content: saving, count: filteredSavings.count, action: {
+                                        SavingCard(content: saving, count: savingVM.savangs.count, action: {
                                             savingVM.deleteTabungan(savingId: saving.id)
                                         })
                                     }
@@ -99,7 +87,7 @@ struct SavingView: View {
     }
 
 #Preview {
-    SavingView()
+    SavingView(savingVM: SavingVM(), preferredListTabungan: .constant(Tabungan.berlangsung))
 }
 
 @ViewBuilder

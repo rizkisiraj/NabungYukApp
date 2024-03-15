@@ -17,8 +17,8 @@ struct SavingDetailForm: View {
     @State private var amount = ""
     
     @FocusState private var focusedField: FocusedField?
-    var content: SavingGoal
-    var savingVM: SavingVM
+    var saving: SavingGoal
+    var incomeHandler: (Int) -> Void
     
     var body: some View {
         VStack(spacing: 20) {
@@ -45,9 +45,9 @@ struct SavingDetailForm: View {
             HStack {
                 if recordType == HistoryType.insert {
                     Button {
-                        amount = String(content.targetSavePerPeriod)
+                        amount = String(saving.targetSavePerPeriod)
                     } label: {
-                        Text("\(content.targetSavePerPeriod)")
+                        Text("\(saving.targetSavePerPeriod)")
                             .foregroundStyle(.primary)
                             .padding(8)
                             .overlay {
@@ -58,9 +58,9 @@ struct SavingDetailForm: View {
                     .transition(.opacity)
                     
                     Button {
-                        amount = String(content.target - content.gatheredAmount)
+                        amount = String(saving.target - saving.gatheredAmount)
                     } label: {
-                        Text("\(content.target - content.gatheredAmount)")
+                        Text("\(saving.target - saving.gatheredAmount)")
                             .foregroundStyle(.primary)
                             .padding(8)
                             .overlay {
@@ -77,13 +77,8 @@ struct SavingDetailForm: View {
             .animation(.easeOut, value: recordType)
             
             Button {
-                let amountInt = Int(amount) ?? 0
-                
-                if amountInt != 0 {
-                    savingVM.editSavingIncome(savingId: content.id, total: amountInt, historyType: recordType)
-                    isPresented = false
-                }
-                
+                guard let amountInt = Int(amount) else { return }
+                incomeHandler(amountInt)
             } label: {
                 Text("Simpan")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -100,5 +95,8 @@ struct SavingDetailForm: View {
 }
 
 #Preview {
-    SavingDetailForm(isPresented: .constant(false), content: SavingGoal.savingGoals[0], savingVM: SavingVM())
+    let myFunction: (Int) -> Void = { number in
+        print(number)
+    }
+    return SavingDetailForm(isPresented: .constant(false), saving: SavingGoal.savingGoals[0], incomeHandler: myFunction)
 }

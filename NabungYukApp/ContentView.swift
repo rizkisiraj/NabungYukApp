@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    @State private var preferredListTabungan = Tabungan.berlangsung
+    
     var body: some View {
-            SavingView()
+            let savingVM = SavingVM(tabunganToShow: preferredListTabungan)
+            SavingView(savingVM: savingVM, preferredListTabungan: $preferredListTabungan)
                 .tabItem {
                     Label("Tabungan", systemImage: "wallet.pass")
             }
