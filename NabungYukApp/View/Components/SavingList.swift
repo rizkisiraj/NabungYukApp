@@ -17,11 +17,11 @@ struct SavingList: View {
         case .berlangsung:
             _savings = Query(filter: #Predicate<SavingGoal> { saving in
                     saving.gatheredAmount < saving.target
-            }, sort: \SavingGoal.createdAt)
+            }, sort: \SavingGoal.createdAt, order: .reverse)
         case .tercapai:
             _savings = Query(filter: #Predicate<SavingGoal> { saving in
                     saving.gatheredAmount >= saving.target
-            }, sort: \SavingGoal.createdAt)
+            }, sort: \SavingGoal.createdAt, order: .reverse)
         }
         self.action = action
     }
