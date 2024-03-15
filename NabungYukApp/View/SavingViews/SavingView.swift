@@ -50,19 +50,19 @@ struct SavingView: View {
                 }
                 .sheet(isPresented: $isSheetShowing) {
                     NavigationStack {
-//                        FormView(savingVM: savingVM, isSheetShowing: $isSheetShowing)
-//                            .toolbar {
-//                                ToolbarItem(placement: .topBarTrailing) {
-//                                    Button {
-//                                        isSheetShowing = false
-//                                    } label: {
-//                                        Image(systemName: "xmark")
-//                                    }
-//                                    .buttonStyle(.borderedProminent)
-//                                    .tint(.red)
-//                                    .clipShape(Circle())
-//                                }
-//                            }
+                        FormView(isSheetShowing: $isSheetShowing)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button {
+                                        isSheetShowing = false
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                                    .clipShape(Circle())
+                                }
+                            }
                     }
                     
                 }

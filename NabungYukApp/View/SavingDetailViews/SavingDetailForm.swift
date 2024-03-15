@@ -12,7 +12,6 @@ struct SavingDetailForm: View {
         case amount
     }
     
-    @Binding var isPresented: Bool
     @State private var recordType = HistoryType.insert
     @State private var amount = ""
     
@@ -98,5 +97,5 @@ struct SavingDetailForm: View {
     let myFunction: (Int) -> Void = { number in
         print(number)
     }
-    return SavingDetailForm(isPresented: .constant(false), saving: SavingGoal.savingGoals[0], incomeHandler: myFunction)
+    return SavingDetailForm(saving: SavingGoal.savingGoals[0], incomeHandler: myFunction)
 }

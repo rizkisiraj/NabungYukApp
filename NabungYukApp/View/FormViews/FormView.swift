@@ -24,6 +24,7 @@ enum FocusedField {
 }
 
 struct FormView: View {
+    @Environment(\.modelContext) var modelContext
     @State var savingNameIsValid = true
     @State var targetSavingIsValid = true
     @State var savingPerPeriodIsValid = true
@@ -34,7 +35,6 @@ struct FormView: View {
     
     @State private var forceUpdate = false
     @State private var inputValidation = InputValidation()
-    @StateObject var savingVM: SavingVM
     @Binding var isSheetShowing: Bool
     @State private var savingName = ""
     @State private var targetSaving = ""
@@ -44,6 +44,13 @@ struct FormView: View {
     @State private var isModalShowing = false
     var savingGoal: SavingGoal?
     @FocusState private var focusedField: FocusedField?
+    
+    var targetSavingInt: Int {
+        Int(targetSaving) ?? 0
+    }
+    var savingPerPeriodInt: Int {
+        Int(savingPerPeriod) ?? 0
+    }
     
     var body: some View {
             VStack(alignment: .leading,spacing: 16) {
@@ -113,9 +120,6 @@ struct FormView: View {
                     Button {
                         ResetValidation()
                         
-                        let targetSavingInt = Int(targetSaving) ?? 0
-                        let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
-                        
                         if savingName.isEmpty {
                             savingNameIsValid = false
                             savingNameErrorText = "Nama tidak boleh kosong"
@@ -135,15 +139,11 @@ struct FormView: View {
                         
                         if savingNameIsValid && targetSavingIsValid && savingPerPeriodIsValid {
                             if var goal = savingGoal {
-                                goal.title = savingName
-                                goal.target = targetSavingInt
-                                goal.targetSavePerPeriod = savingPerPeriodInt
-                                goal.period = period
-                                goal.category = selectedCategory
-                                savingVM.editSavingGoal(newSaving: goal)
+                                editSavingGoal(savingGoal: goal)
                             } else {
                                 let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
-                                savingVM.addSavingGoal(savingGoal: newSavingGoal)
+                                addSavingGoal(savingGoal: newSavingGoal)
+                                
                             }
                             isSheetShowing = false
                             return
@@ -185,10 +185,24 @@ struct FormView: View {
     }
     .sheet(isPresented: .constant(true)) {
             NavigationStack {
-                FormView(savingVM: SavingVM(), isSheetShowing: .constant(false))
+                FormView(isSheetShowing: .constant(false))
             }
         }
     
+}
+
+extension FormView {
+    func addSavingGoal(savingGoal: SavingGoal) {
+        modelContext.insert(savingGoal)
+    }
+    
+    func editSavingGoal(savingGoal: SavingGoal) {
+        savingGoal.title = savingName
+        savingGoal.target = targetSavingInt
+        savingGoal.targetSavePerPeriod = savingPerPeriodInt
+        savingGoal.setPeriod(period: period)
+        savingGoal.setCategory(category: selectedCategory)
+    }
 }
 
 struct CategoryCard: View {
