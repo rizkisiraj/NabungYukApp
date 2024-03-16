@@ -7,7 +7,7 @@
 
 import Foundation
 
-class History {
+class History: Codable {
     var id = UUID()
     var total: Int
     private var historyTypeString: String

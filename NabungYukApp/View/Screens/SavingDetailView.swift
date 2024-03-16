@@ -115,26 +115,26 @@ struct SavingDetailViews: View {
                                 Text("Riwayat")
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .padding(.bottom, 10)
-//                                ForEach(savingHistories, id: \.id) { history in
-//                                    
-//                                    HStack {
-//                                        Text(formatDateToIndonesian(date: history.createdAt))
-//                                        Spacer()
-//                                        
-//                                        switch(history.historyType) {
-//                                        case .insert:
-//                                            Text("+ \(formatNumberToRupiah(number: history.total))")
-//                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-//                                                .foregroundStyle(.green)
-//                                        case .withdraw:
-//                                            Text("- \(formatNumberToRupiah(number: history.total))")
-//                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-//                                                .foregroundStyle(.red)
-//                                        }
-//                                    }
-//                                    .padding(.bottom)
-//                                    
-//                                }
+                                ForEach(contentSuave.histories, id: \.id) { history in
+                                    
+                                    HStack {
+                                        Text(formatDateToIndonesian(date: history.createdAt))
+                                        Spacer()
+                                        
+                                        switch(history.historyType) {
+                                        case .insert:
+                                            Text("+ \(formatNumberToRupiah(number: history.total))")
+                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                                .foregroundStyle(.green)
+                                        case .withdraw:
+                                            Text("- \(formatNumberToRupiah(number: history.total))")
+                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                                .foregroundStyle(.red)
+                                        }
+                                    }
+                                    .padding(.bottom)
+                                    
+                                }
                             }
                             .padding()
                             .padding(.bottom, 32)

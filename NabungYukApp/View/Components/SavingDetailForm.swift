@@ -17,7 +17,7 @@ struct SavingDetailForm: View {
     
     @FocusState private var focusedField: FocusedField?
     var saving: SavingGoal
-    var incomeHandler: (Int) -> Void
+    var incomeHandler: (Int, HistoryType) -> Void
     
     var body: some View {
         VStack(spacing: 20) {
@@ -77,7 +77,7 @@ struct SavingDetailForm: View {
             
             Button {
                 guard let amountInt = Int(amount) else { return }
-                incomeHandler(amountInt)
+                incomeHandler(amountInt, recordType)
             } label: {
                 Text("Simpan")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -94,7 +94,7 @@ struct SavingDetailForm: View {
 }
 
 #Preview {
-    let myFunction: (Int) -> Void = { number in
+    let myFunction: (Int, HistoryType) -> Void = { number, history in
         print(number)
     }
     return SavingDetailForm(saving: SavingGoal.savingGoals[0], incomeHandler: myFunction)

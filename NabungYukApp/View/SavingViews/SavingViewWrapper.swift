@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct SwiftUIWrapper: View {
+    @State private var preferredListTabungan = Tabungan.berlangsung
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        SavingView()
     }
 }
 

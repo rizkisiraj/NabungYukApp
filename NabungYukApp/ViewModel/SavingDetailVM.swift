@@ -10,16 +10,20 @@ import SwiftUI
 
 @MainActor
 class SavingDetailVM: ObservableObject {
-    @Published var content: SavingGoal
+    @Bindable var saving: SavingGoal
     @Published var savingHistories: [History] = []
-    @ObservedObject var savingVM: SavingVM
     
-    init(content: SavingGoal, savingVM: SavingVM) {
-        self.content = content
-        self.savingVM = savingVM
+    init(saving: SavingGoal, savingHistories: [History] = []) {
+        self.saving = saving
+        self.savingHistories = savingHistories
     }
     
-    var contentId: SavingGoal {
-        savingVM.savings.first(where: { $0.id == content.id }) ?? SavingGoal.savingGoals[0]
+    func editSavingIncome(savingId: UUID, total: Int, historyType: HistoryType) {
+            switch historyType {
+            case .insert:
+                saving.gatheredAmount += total
+            case .withdraw:
+                saving.gatheredAmount -= total
+            }
     }
 }

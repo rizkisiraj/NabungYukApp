@@ -193,7 +193,9 @@ struct FormView: View {
 
 extension FormView {
     func addSavingGoal(savingGoal: SavingGoal) {
-        modelContext.insert(savingGoal)
+        withAnimation {
+            modelContext.insert(savingGoal)
+        }
     }
     
     func editSavingGoal(savingGoal: SavingGoal) {
