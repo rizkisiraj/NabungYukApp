@@ -18,22 +18,22 @@ struct SavingDetailViews: View {
     
     var body: some View {
         if isEditing {
-//            FormView(savingVM: savingVM, isSheetShowing: $isEditing, savingGoal: contentSuave)
-//                .background(.ultraThinMaterial)
-//                .toolbar {
-//                    ToolbarItem(placement: .topBarTrailing) {
-//                        Button {
-//                            withAnimation {
-//                                isEditing = false
-//                            }
-//                            
-//                        } label: {
-//                                Text("Cancel")
-//                        }
-//                        .tint(.green)
-//                    }
-//                    
-//            }
+            FormView(isSheetShowing: $isEditing, savingGoal: contentSuave)
+                .background(.ultraThinMaterial)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            withAnimation {
+                                isEditing = false
+                            }
+                            
+                        } label: {
+                                Text("Cancel")
+                        }
+                        .tint(.green)
+                    }
+                    
+            }
         } else {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(.vertical) {
@@ -198,10 +198,21 @@ struct SavingDetailViews: View {
 }
 
 extension SavingDetailViews {
-    func editSavingIncome(amount: Int) {
+    func editSavingIncome(amount: Int, historyType: HistoryType) {
         guard amount >= 0 else { return }
         
-        contentSuave.gatheredAmount += amount
+        if historyType == .withdraw && contentSuave.gatheredAmount <= 0 {
+            return
+        }
+        
+        switch historyType {
+        case .insert:
+            contentSuave.gatheredAmount += amount
+        case .withdraw:
+            contentSuave.gatheredAmount -= amount
+        }
+        contentSuave.histories.append(History(total: amount, historyType: historyType))
+        
         isPresented = false
     }
 }

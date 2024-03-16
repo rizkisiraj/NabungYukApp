@@ -28,7 +28,7 @@ struct SavingList: View {
     
     
     var body: some View {
-        VStack(spacing: 14) {
+        LazyVStack(spacing: 14) {
             if savings.isEmpty {
                 EmptySavingListPlaceholder()
             } else {
@@ -36,14 +36,7 @@ struct SavingList: View {
                     NavigationLink {
                         SavingDetailViews(contentSuave: saving)
                     } label: {
-                        SavingCard(content: saving, count: savings.count)
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button {
-                                    action(saving)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }))
+                        SavingCard(content: saving, count: savings.count, action: {action(saving)})
                     }
                 }
                 Spacer()

@@ -7,12 +7,22 @@
 
 import Foundation
 
-struct History {
+class History {
     var id = UUID()
-    var savingId: UUID
     var total: Int
-    var historyType: HistoryType
+    private var historyTypeString: String
+    var historyType: HistoryType {
+        return HistoryType(rawValue: historyTypeString)!
+    }
     var createdAt = Date()
+    
+    init(id: UUID = UUID(), total: Int, historyType: HistoryType, createdAt: Date = Date()) {
+        self.id = id
+        self.total = total
+        self.historyTypeString = historyType.rawValue
+        self.createdAt = createdAt
+        
+    }
 }
 
 enum HistoryType: String, CaseIterable {

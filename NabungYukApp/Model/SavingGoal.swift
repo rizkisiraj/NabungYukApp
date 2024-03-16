@@ -15,8 +15,9 @@ class SavingGoal: Identifiable {
     var target: Int
     var targetSavePerPeriod: Int
     var dummyImage: String
-    var createdAt: Date = Date()
-    var gatheredAmount = 0
+    var createdAt: Date
+    var gatheredAmount: Int
+    var histories: [History]
     
     private var periodString: String
     var period: PeriodSelection {
@@ -36,7 +37,7 @@ class SavingGoal: Identifiable {
         periodString = period.rawValue
     }
     
-    init(id: UUID = UUID(), title: String = "", target: Int = 0, period: PeriodSelection = PeriodSelection.daily, targetSavePerPeriod: Int = 0, dummyImage: String = "", category: Category = Category.education, createdAt: Date = .now, gatheredAmount: Int = 0) {
+    init(id: UUID = UUID(), title: String = "", target: Int = 0, period: PeriodSelection = PeriodSelection.daily, targetSavePerPeriod: Int = 0, dummyImage: String = "", category: Category = Category.education, createdAt: Date = .now, gatheredAmount: Int = 0, histories: [History] = []) {
         self.id = id
         self.title = title
         self.target = target
@@ -46,6 +47,7 @@ class SavingGoal: Identifiable {
         self.createdAt = createdAt
         self.gatheredAmount = gatheredAmount
         self.periodString = period.rawValue
+        self.histories = []
     }
 }
 
