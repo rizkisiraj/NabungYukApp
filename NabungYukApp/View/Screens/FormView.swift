@@ -25,6 +25,7 @@ enum FocusedField {
 
 struct FormView: View {
     @Environment(\.modelContext) var modelContext
+    let helper = Helpers.shared
     @State var savingNameIsValid = true
     @State var targetSavingIsValid = true
     @State var savingPerPeriodIsValid = true
@@ -108,7 +109,7 @@ struct FormView: View {
                 let savingPerPeriodInt = Int(savingPerPeriod) ?? 0
                 
                 if targetSavingInt != 0 && savingPerPeriodInt != 0 {
-                    Text(estimateCompletionDate(savingTarget: Double(targetSaving) ?? 0, savingPerPeriod: Double(savingPerPeriod) ?? 0, period: period))
+                    Text(helper.estimateCompletionDate(savingTarget: Double(targetSaving) ?? 0, savingPerPeriod: Double(savingPerPeriod) ?? 0, period: period))
                 } else {
                     Text("Isi terlebih dahulu target tabungan dan nominal pengisian tiap periode")
                 }

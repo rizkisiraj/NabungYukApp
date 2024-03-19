@@ -12,6 +12,20 @@ struct SavingCard: View {
     var count: Int
     var action: () -> Void
     
+    let helpers = Helpers.shared
+    
+    var timeToReachTarget: String {
+        helpers.timeToReachTarget(target: content.target, savingsPerPeriod: content.targetSavePerPeriod, period: content.period)
+    }
+    
+    var currentAmount: String {
+        helpers.formatNumberToRupiah(number: content.gatheredAmount)
+    }
+    
+    var currentTarget: String {
+        helpers.formatNumberToRupiah(number: content.target)
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .center, spacing: 8) {
@@ -29,7 +43,7 @@ struct SavingCard: View {
                         .font(.system(.title3, design: .rounded))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.primary)
-                    Text(timeToReachTarget(target: content.target, savingsPerPeriod: content.targetSavePerPeriod, period: content.period))
+                    Text(timeToReachTarget)
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                 }
@@ -40,7 +54,7 @@ struct SavingCard: View {
                     Text("Current Amount")
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
-                    Text(formatNumberToRupiah(number: content.gatheredAmount))
+                    Text(currentAmount)
                         .font(.system(size: 14))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.primary)
@@ -50,7 +64,7 @@ struct SavingCard: View {
                     Text("Goal")
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
-                    Text(formatNumberToRupiah(number: content.target))
+                    Text(currentTarget)
                         .font(.system(size: 14))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.green)

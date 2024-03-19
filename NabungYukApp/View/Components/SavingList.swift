@@ -34,7 +34,7 @@ struct SavingList: View {
             } else {
                 ForEach(savings) { saving in
                     NavigationLink {
-                        SavingDetailViews(contentSuave: saving)
+                        SavingDetailViews(content: saving)
                     } label: {
                         SavingCard(content: saving, count: savings.count, action: {action(saving)})
                     }

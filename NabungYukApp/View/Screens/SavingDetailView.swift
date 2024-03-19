@@ -9,16 +9,45 @@ import SwiftUI
 
 struct SavingDetailViews: View {
     @Environment(\.modelContext) var modelContext
+    let helpers = Helpers.shared
     @State private var isPresented = false
     @State private var isDeleting = false
     @State private var imageScale: CGFloat = 0.1
     @State private var isEditing = false
     
-    @Bindable var contentSuave: SavingGoal
+    @Bindable var content: SavingGoal
+    
+    var timeToReachTarget: String {
+        helpers.timeToReachTarget(target: content.target-content.gatheredAmount, savingsPerPeriod: content.targetSavePerPeriod, period: content.period)
+    }
+    
+    var currentAmount: String {
+        helpers.formatNumberToRupiah(number: content.gatheredAmount)
+    }
+    
+    var currentTarget: String {
+        helpers.formatNumberToRupiah(number: content.target)
+    }
+    
+    var targetSavePerPeriod: String {
+        helpers.formatNumberToRupiah(number: content.targetSavePerPeriod)
+    }
+    
+    var progressPercentage: Double {
+        helpers.generatePercentage(target: content.targetSavePerPeriod, process: content.gatheredAmount)
+    }
+    
+    var createdDateIndonesian: String {
+        helpers.formatDateToIndonesian(date: content.createdAt)
+    }
+    
+    var differences: String {
+        helpers.formatNumberToRupiah(number: content.target - content.gatheredAmount)
+    }
     
     var body: some View {
         if isEditing {
-            FormView(isSheetShowing: $isEditing, savingGoal: contentSuave)
+            FormView(isSheetShowing: $isEditing, savingGoal: content)
                 .background(.ultraThinMaterial)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -42,7 +71,7 @@ struct SavingDetailViews: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.green.secondary)
                                 .frame(width: .infinity, height: 200)
-                            Image(systemName: contentSuave.category.rawValue)
+                            Image(systemName: content.category.rawValue)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
@@ -57,16 +86,16 @@ struct SavingDetailViews: View {
                         VStack {
                             HStack {
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text(formatNumberToRupiah(number: contentSuave.target))
+                                    Text(currentTarget)
                                         .font(.system(size: 24))
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text("\(formatNumberToRupiah(number: contentSuave.targetSavePerPeriod)) \(contentSuave.period.rawValue)")
+                                    Text("\(targetSavePerPeriod) \(content.period.rawValue)")
                                         .font(.headline)
                                 }
                                 Spacer()
                                 ZStack {
-                                    CircularProgressView(progress: generatePercentage(target:contentSuave.target, process: contentSuave.gatheredAmount))
-                                    Text("\(generatePercentage(target:contentSuave.target, process: contentSuave.gatheredAmount) * 100, specifier: "%.0f")%")
+                                    CircularProgressView(progress: progressPercentage)
+                                    Text("\(progressPercentage * 100, specifier: "%.0f")%")
                                         .font(.system(size: 14))
                                         .bold()
                                 }.frame(width: 50, height: 50)
@@ -78,13 +107,13 @@ struct SavingDetailViews: View {
                                     Text("Tanggal Dibuat")
                                         .font(.headline)
                                     Spacer()
-                                    Text(formatDateToIndonesian(date: contentSuave.createdAt))
+                                    Text(createdDateIndonesian)
                                 }
                                 HStack {
                                     Text("Estimasi Tercapai")
                                         .font(.headline)
                                     Spacer()
-                                    Text(timeToReachTarget(target: contentSuave.target-contentSuave.gatheredAmount, savingsPerPeriod:contentSuave.targetSavePerPeriod, period:contentSuave.period))
+                                    Text(timeToReachTarget)
                                 }
                             }
                             .padding(.vertical)
@@ -93,7 +122,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Terkumpul")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (contentSuave.gatheredAmount)))
+                                    Text(currentAmount)
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.green)
@@ -102,7 +131,7 @@ struct SavingDetailViews: View {
                                 VStack(spacing: 4) {
                                     Text("Tersisa")
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    Text(formatNumberToRupiah(number: (contentSuave.target - contentSuave.gatheredAmount)))
+                                    Text(differences)
                                         .font(.title3)
                                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                         .foregroundStyle(.red)
@@ -115,25 +144,8 @@ struct SavingDetailViews: View {
                                 Text("Riwayat")
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .padding(.bottom, 10)
-                                ForEach(contentSuave.histories, id: \.id) { history in
-                                    
-                                    HStack {
-                                        Text(formatDateToIndonesian(date: history.createdAt))
-                                        Spacer()
-                                        
-                                        switch(history.historyType) {
-                                        case .insert:
-                                            Text("+ \(formatNumberToRupiah(number: history.total))")
-                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                                .foregroundStyle(.green)
-                                        case .withdraw:
-                                            Text("- \(formatNumberToRupiah(number: history.total))")
-                                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                                .foregroundStyle(.red)
-                                        }
-                                    }
-                                    .padding(.bottom)
-                                    
+                                ForEach(content.histories, id: \.id) { history in
+                                    HistorySingle(history: history)
                                 }
                             }
                             .padding()
@@ -141,12 +153,12 @@ struct SavingDetailViews: View {
                         }
                     }
                     .padding(.horizontal)
-                    .navigationTitle(contentSuave.title)
+                    .navigationTitle(content.title)
                     .toolbar(.hidden, for: .tabBar)
                     
                 }
                 .background(.ultraThinMaterial)
-                if contentSuave.gatheredAmount < contentSuave.target {
+                if content.gatheredAmount < content.target {
                     Button {
                         isPresented = true
                     } label: {
@@ -167,7 +179,7 @@ struct SavingDetailViews: View {
             }
             .sheet(isPresented: $isPresented) {
                 NavigationStack {
-                    SavingDetailForm(saving: contentSuave, incomeHandler: editSavingIncome)
+                    SavingDetailForm(saving: content, incomeHandler: editSavingIncome)
                         .navigationBarTitleDisplayMode(.inline)
                 }.presentationDetents([.medium])
             }
@@ -201,17 +213,17 @@ extension SavingDetailViews {
     func editSavingIncome(amount: Int, historyType: HistoryType) {
         guard amount >= 0 else { return }
         
-        if historyType == .withdraw && contentSuave.gatheredAmount <= 0 {
+        if historyType == .withdraw && content.gatheredAmount <= 0 {
             return
         }
         
         switch historyType {
         case .insert:
-            contentSuave.gatheredAmount += amount
+            content.gatheredAmount += amount
         case .withdraw:
-            contentSuave.gatheredAmount -= amount
+            content.gatheredAmount -= amount
         }
-        contentSuave.histories.append(History(total: amount, historyType: historyType))
+        content.histories.append(History(total: amount, historyType: historyType))
         
         isPresented = false
     }
