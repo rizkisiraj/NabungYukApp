@@ -34,7 +34,7 @@ struct SavingDetailViews: View {
     }
     
     var progressPercentage: Double {
-        helpers.generatePercentage(target: content.targetSavePerPeriod, process: content.gatheredAmount)
+        helpers.generatePercentage(target: content.target, process: content.gatheredAmount)
     }
     
     var createdDateIndonesian: String {

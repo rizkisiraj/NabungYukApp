@@ -54,19 +54,20 @@ struct FormView: View {
     }
     
     var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading,spacing: 16) {
                 
                 CustomTextfield(text: $savingName, icon: "text.alignleft", title: "Nama Tabungan", type: .text, isValid: $savingNameIsValid, errorMessage: $savingNameErrorText)
                     .focused($focusedField, equals: .savingName)
                 
                 CustomTextfield(text: $targetSaving, icon: "number", title: "Target Tabungan", type: .number, isValid: $targetSavingIsValid, errorMessage: $targetSavingErrorText)
-                            .focused($focusedField, equals: .targetSaving)
+                    .focused($focusedField, equals: .targetSaving)
                 
                 Text("Kategori")
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack() {
                         ForEach(Category.allCases, id: \.self) { category in
-                                CategoryCard(category: category, selected: $selectedCategory)
+                            CategoryCard(category: category, selected: $selectedCategory)
                         }
                     }
                 }
@@ -78,15 +79,15 @@ struct FormView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                     Picker("Periode Pengisian", selection: $period) {
-                            ForEach(PeriodSelection.allCases, id: \.self) {period in
-                                Text("\(period.rawValue)").tag(period)
-                            }
+                        ForEach(PeriodSelection.allCases, id: \.self) {period in
+                            Text("\(period.rawValue)").tag(period)
                         }
+                    }
                     .pickerStyle(.segmented)
                 }
                 HStack {
                     CustomTextfield(text: $savingPerPeriod, title: "Nominal Pengisian", type: .number, isValid: $savingPerPeriodIsValid, errorMessage: $savingPerPeriodErrorText)
-                                .focused($focusedField, equals: .savingPerPeriod)
+                        .focused($focusedField, equals: .savingPerPeriod)
                     Button {
                         isModalShowing = true
                     } label: {
@@ -95,9 +96,50 @@ struct FormView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .clipShape(Circle())
+                    .padding(.bottom, 16)
                     .tint(.green)
                 }
                 Spacer()
+                
+                Button {
+                    ResetValidation()
+                    
+                    if savingName.isEmpty {
+                        savingNameIsValid = false
+                        savingNameErrorText = "Nama tidak boleh kosong"
+                    }
+                    
+                    if targetSavingInt == 0 || savingPerPeriodInt > targetSavingInt {
+                        targetSavingIsValid = false
+                        targetSavingErrorText = "Target tidak boleh lebih kecil dari nominal pengisian"
+                        focusedField = .targetSaving
+                    }
+                    
+                    if savingPerPeriodInt == 0 {
+                        savingPerPeriodIsValid = false
+                        savingPerPeriodErrorText = "Nominal pengisian tidak boleh kosong"
+                        focusedField = .savingPerPeriod
+                    }
+                    
+                    if savingNameIsValid && targetSavingIsValid && savingPerPeriodIsValid {
+                        if let goal = savingGoal {
+                            editSavingGoal(savingGoal: goal)
+                        } else {
+                            let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
+                            addSavingGoal(savingGoal: newSavingGoal)
+                            
+                        }
+                        isSheetShowing = false
+                        return
+                    }
+                } label: {
+                    Text(savingGoal != nil ? "Simpan" : "Tambah" )
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .clipShape(Capsule())
+                .padding(.bottom,8)
             }
             .padding()
             .alert(Text("Estimasi Pengisian"), isPresented: $isModalShowing) {
@@ -116,48 +158,6 @@ struct FormView: View {
             }
             .navigationTitle(savingGoal != nil ? "Edit Tabungan" : "Tambah Tabungan")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        ResetValidation()
-                        
-                        if savingName.isEmpty {
-                            savingNameIsValid = false
-                            savingNameErrorText = "Nama tidak boleh kosong"
-                        }
-                        
-                        if targetSavingInt == 0 || savingPerPeriodInt > targetSavingInt {
-                            targetSavingIsValid = false
-                            targetSavingErrorText = "Target tidak boleh lebih kecil dari nominal pengisian"
-                            focusedField = .targetSaving
-                        }
-                        
-                        if savingPerPeriodInt == 0 {
-                            savingPerPeriodIsValid = false
-                            savingPerPeriodErrorText = "Nominal pengisian tidak boleh kosong"
-                            focusedField = .savingPerPeriod
-                        }
-                        
-                        if savingNameIsValid && targetSavingIsValid && savingPerPeriodIsValid {
-                            if var goal = savingGoal {
-                                editSavingGoal(savingGoal: goal)
-                            } else {
-                                let newSavingGoal = SavingGoal(title: savingName, target: targetSavingInt, period: period, targetSavePerPeriod: savingPerPeriodInt, dummyImage: "dummyImage1", category: selectedCategory)
-                                addSavingGoal(savingGoal: newSavingGoal)
-                                
-                            }
-                            isSheetShowing = false
-                            return
-                        }
-                    } label: {
-                        Text(savingGoal != nil ? "Simpan" : "Tambah" )
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .clipShape(Capsule())
-                }
-            }
             .onAppear {
                 if let goal = savingGoal {
                     self.savingName = goal.title
@@ -167,6 +167,7 @@ struct FormView: View {
                     self.selectedCategory = goal.category
                 }
             }
+        }
     }
     
     func ResetValidation() {
@@ -181,14 +182,8 @@ struct FormView: View {
 }
 
 #Preview {
-    Button("Saya") {
-        
-    }
-    .sheet(isPresented: .constant(true)) {
-            NavigationStack {
-                FormView(isSheetShowing: .constant(false))
-            }
-        }
+    FormView(isSheetShowing: .constant(false))
+        .modelContainer(DataController.previewContainer)
     
 }
 

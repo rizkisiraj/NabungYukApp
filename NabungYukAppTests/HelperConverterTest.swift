@@ -58,4 +58,13 @@ final class HelperConverterTest: XCTestCase {
         let result = helper.timeToReachTarget(target: target, savingsPerPeriod: savingPerPeriod, period: period)
         XCTAssertEqual(result, "2 hari lagi")
     }
+    
+    func testSavingPeriodNegative_ShouldReturnZero() {
+        let target = 10
+        let savingPerPeriod = -1
+        let period = PeriodSelection.daily
+        
+        let result = helper.timeToReachTarget(target: target, savingsPerPeriod: savingPerPeriod, period: period)
+        XCTAssertEqual(result, "0 hari lagi")
+    }
 }
