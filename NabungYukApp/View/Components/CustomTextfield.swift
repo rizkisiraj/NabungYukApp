@@ -51,7 +51,7 @@ struct CustomTextfield: View {
                     Spacer()
                         .frame(width: 40)
                 }
-                Text(!errorMessage.isEmpty ? errorMessage : "")
+                Text(errorMessage )
                         .font(.caption)
                         .frame(minHeight: 12)
                         .padding(.leading)

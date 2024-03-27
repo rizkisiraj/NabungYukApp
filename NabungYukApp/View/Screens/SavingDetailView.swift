@@ -12,7 +12,6 @@ struct SavingDetailViews: View {
     let helpers = Helpers.shared
     @State private var isPresented = false
     @State private var isDeleting = false
-    @State private var imageScale: CGFloat = 0.1
     @State private var isEditing = false
     
     @Bindable var content: SavingGoal
@@ -76,12 +75,6 @@ struct SavingDetailViews: View {
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .foregroundStyle(.green)
-                                .scaleEffect(imageScale)
-                                .onAppear {
-                                    withAnimation(.easeOut(duration: 0.5)) {
-                                        imageScale = 1
-                                    }
-                                }
                         }
                         VStack {
                             HStack {
